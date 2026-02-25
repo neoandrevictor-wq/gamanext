@@ -4,42 +4,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gama Next | Jogos e Sistemas com IA em Tempo Recorde</title>
+    <title>Gama Next | Engenharia de IA em Tempo Recorde</title>
     <!-- Fontes limpas e modernas -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-color: #050505;
             --text-color: #e0e0e0;
-            --primary: #00ffcc; /* Cyan Principal */
-            --secondary: #ff0055; /* Rosa/Vermelho Velocidade */
-            --warning: #ffcc00; /* Amarelo Alerta/Pílula */
+            --primary: #00ffcc;
+            /* Cyan Principal */
+            --secondary: #ff0055;
+            /* Rosa/Vermelho Velocidade */
+            --warning: #ffcc00;
+            /* Amarelo Alerta/Pílula */
             --card-bg: #0f0f0f;
             --code-bg: #090909;
             --border-color: #222;
+
+            /* Cores da Suite Vision */
+            --vision-color: #f43f5e;
+            --vision-extend: #0ea5e9;
+            --vision-luma: #22d3ee;
+            --vision-oblit: #ef4444;
+            --vision-repaint: #10b981;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
         /* HEADER */
         header {
-            display: flex; justify-content: space-between; align-items: center; padding: 20px 5%;
-            background-color: rgba(5, 5, 5, 0.9); position: fixed; width: 100%; top: 0; z-index: 1000;
-            border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: rgba(5, 5, 5, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
         }
 
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; color: #fff; text-decoration: none; text-transform: uppercase;}
-        .logo span { color: var(--primary); }
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
 
-        nav { display: flex; gap: 25px; }
-        nav a { color: #aaa; text-decoration: none; font-weight: 600; transition: color 0.2s; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;}
-        nav a:hover { color: #fff; }
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
 
         /* HERO SECTION */
         .hero {
-            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
             padding: 120px 20px 60px 20px;
             background: radial-gradient(circle at 50% 30%, #111 0%, var(--bg-color) 70%);
             /* Padrão de grade super sutil no fundo */
@@ -48,70 +109,235 @@
         }
 
         .hero-tag {
-            color: var(--primary); font-family: 'Fira Code', monospace; font-size: 0.9rem; font-weight: bold;
-            margin-bottom: 25px; padding: 6px 16px; border: 1px solid var(--primary); border-radius: 20px; background: rgba(0, 255, 204, 0.05);
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            padding: 6px 16px;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            background: rgba(0, 255, 204, 0.05);
         }
 
-        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 20px; color: #ffffff; line-height: 1.1; font-weight: 900; letter-spacing: -1px;}
-        
-        /* Correção do texto vazado: Fundo sólido com brilho suave */
-        .hero h1 span { 
-            color: var(--primary); 
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 20px;
+            color: #ffffff;
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
             text-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
         }
 
-        .hero p { font-size: clamp(1rem, 4vw, 1.25rem); max-width: 800px; margin-bottom: 40px; color: #aaa; }
-        .hero p strong { color: #fff; font-weight: 800; }
-
-        .cta-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-
-        .btn {
-            padding: 16px 32px; border-radius: 6px; font-size: 1rem; font-weight: 800; cursor: pointer; text-decoration: none; transition: 0.2s; border: none; text-transform: uppercase; letter-spacing: 1px;
+        .hero p {
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            max-width: 800px;
+            margin-bottom: 40px;
+            color: #aaa;
         }
 
-        .btn-primary { background: var(--primary); color: #000; box-shadow: 0 4px 15px rgba(0,255,204,0.2); }
-        .btn-primary:hover { background: #fff; box-shadow: 0 4px 25px rgba(255,255,255,0.4); transform: translateY(-2px);}
-        
-        .btn-outline { background: transparent; color: #fff; border: 2px solid #333; }
-        .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px);}
+        .hero p strong {
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #fff;
+            box-shadow: 0 4px 25px rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #333;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
 
         /* SECTIONS */
-        .section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
-        .section h2 { font-size: 2.8rem; margin-bottom: 50px; text-align: center; color: #fff; font-weight: 900; letter-spacing: -1px;}
+        .section {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background-color: #080808;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #fff;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
 
         /* GRID SYSTEM */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 25px; width: 100%; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+            gap: 25px;
+            width: 100%;
+        }
 
         /* CARDS */
         .card {
-            background-color: var(--card-bg); padding: 40px 30px; border-radius: 12px; border: 1px solid var(--border-color);
-            transition: 0.3s; display: flex; flex-direction: column; position: relative;
+            background-color: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
-        .card:hover { border-color: #555; transform: translateY(-5px); background-color: #141414; }
-        .card.featured { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,255,204,0.05); }
-        .card.featured:hover { box-shadow: 0 10px 40px rgba(0,255,204,0.15); }
 
-        .card h3 { color: #fff; margin-bottom: 15px; font-size: 1.6rem; font-weight: 800;}
-        .card p { color: #aaa; font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; line-height: 1.7;}
+        .card:hover {
+            border-color: #555;
+            transform: translateY(-5px);
+            background-color: #141414;
+        }
 
-        /* BADGE DE VELOCIDADE */
-        .speed-badge {
-            display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 204, 0, 0.1);
-            color: var(--warning); font-family: 'Fira Code', monospace; font-size: 0.75rem; font-weight: 700;
-            padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255, 204, 0, 0.3);
-            margin-bottom: 20px; width: fit-content; text-transform: uppercase; letter-spacing: 1px;
+        .card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.05);
+        }
+
+        .card.featured:hover {
+            box-shadow: 0 10px 40px rgba(0, 255, 204, 0.15);
+        }
+
+        .card h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .card p {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            flex-grow: 1;
+            line-height: 1.7;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge-speed {
+            background: rgba(255, 204, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 204, 0, 0.3);
+        }
+
+        .badge-ai {
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 204, 0.3);
         }
 
         .card-link {
-            color: var(--primary); text-decoration: none; font-weight: 800; font-size: 0.9rem;
-            display: flex; align-items: center; gap: 5px; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
         }
-        .card-link:hover { color: #fff; padding-left: 5px;}
+
+        .card-link:hover {
+            filter: brightness(1.5);
+            padding-left: 5px;
+        }
 
         /* PROMPT AREA */
-        .prompt-container { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; margin-top: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);}
-        .prompt-header { background: #111; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
-        .prompt-body { padding: 30px; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #00ffcc; max-height: 500px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; line-height: 1.6;}
+        .prompt-container {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .prompt-header {
+            background: #111;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .prompt-body {
+            padding: 30px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #00ffcc;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.6;
+        }
 
         /* PÍLULA DE CONHECIMENTO */
         .knowledge-pill {
@@ -120,30 +346,79 @@
             padding: 25px;
             margin-top: 30px;
             border-radius: 0 12px 12px 0;
-            border-top: 1px solid rgba(255, 204, 0, 0.1);
-            border-right: 1px solid rgba(255, 204, 0, 0.1);
-            border-bottom: 1px solid rgba(255, 204, 0, 0.1);
+            border: 1px solid rgba(255, 204, 0, 0.1);
+            border-left: 4px solid var(--warning);
             color: #ddd;
             font-size: 0.95rem;
             line-height: 1.6;
         }
-        .knowledge-pill strong { color: var(--warning); display: block; margin-bottom: 15px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;}
-        .knowledge-pill ol { margin-left: 20px; margin-top: 15px; margin-bottom: 15px; color: #fff;}
-        .knowledge-pill li { margin-bottom: 10px; }
-        .knowledge-pill p { margin-bottom: 10px; color: #aaa; }
+
+        .knowledge-pill strong {
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .knowledge-pill ol {
+            margin-left: 20px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .knowledge-pill li {
+            margin-bottom: 10px;
+        }
+
+        .knowledge-pill p {
+            margin-bottom: 10px;
+            color: #aaa;
+        }
 
         /* FOOTER */
-        footer { text-align: center; padding: 80px 20px; background-color: #020202; border-top: 1px solid var(--border-color); }
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            background-color: #020202;
+            border-top: 1px solid var(--border-color);
+        }
 
         @media (max-width: 768px) {
-            header { flex-direction: column; padding: 15px; }
-            nav { margin-top: 15px; gap: 15px; flex-wrap: wrap; justify-content: center; }
-            .hero { padding-top: 160px; }
-            .section { padding: 80px 20px; }
-            .section h2 { font-size: 2.2rem; }
-            .card h3 { font-size: 1.4rem; }
-            .prompt-body { padding: 15px; font-size: 0.75rem; }
-            .knowledge-pill { padding: 15px; font-size: 0.85rem;}
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            nav {
+                margin-top: 15px;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding-top: 160px;
+            }
+
+            .section {
+                padding: 80px 20px;
+            }
+
+            .section h2 {
+                font-size: 2.2rem;
+            }
+
+            .card h3 {
+                font-size: 1.4rem;
+            }
+
+            .prompt-body {
+                padding: 15px;
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
@@ -153,124 +428,243 @@
     <header>
         <a href="#" class="logo">GAMA <span>NEXT</span></a>
         <nav>
+            <a href="#vision-suite">Vision Suite</a>
+            <a href="#portfolio">Jogos & Sistemas</a>
             <a href="#metodo">O Método</a>
-            <a href="#portfolio">Projetos em 24h</a>
             <a href="#prompt">Prompt Master</a>
-            <a href="mailto:neoandrevictor@gmail.com">Contato</a>
         </nav>
     </header>
 
     <section class="hero">
         <div class="hero-tag">AI-DRIVEN DEVELOPMENT</div>
-        <h1>Jogos e Sistemas.<br><span>Em Tempo Recorde.</span></h1>
-        <p>Desenvolvimento focado em performance extrema, Vanilla JS e Web APIs. O que demorava meses, a Gama Next constrói do zero. <strong>Todos os projetos abaixo foram feitos em apenas 1 dia usando Inteligência Artificial.</strong></p>
+        <h1>Sistemas e Ferramentas.<br><span>Em Tempo Recorde.</span></h1>
+        <p>Desenvolvimento focado em performance extrema, Vanilla JS e Web APIs. O que demorava meses, a Gama Next
+            constrói do zero. <strong>Todas as ferramentas e jogos abaixo foram arquitetados via IA estrutural
+                pura.</strong></p>
         <div class="cta-group">
-            <a href="#portfolio" class="btn btn-primary">Ver Projetos (Criados em 24h)</a>
+            <a href="#vision-suite" class="btn btn-primary">Conhecer Vision Suite</a>
             <a href="#prompt" class="btn btn-outline">Ver o Prompt Mestre</a>
         </div>
     </section>
 
-    <section id="metodo" class="section">
-        <h2>Como somos tão rápidos?</h2>
-        <div class="grid">
-            <div class="card" style="border-top: 3px solid var(--primary);">
-                <h3>🤖 IA como Co-Piloto</h3>
-                <p>Não escrevemos boilerplate. Orquestramos a arquitetura através de Engenharia de Prompts avançada, deixando a IA gerar a lógica bruta enquanto focamos no design criativo de sistemas.</p>
+    <!-- NOVA SEÇÃO: GAMA VISION SUITE -->
+    <div class="section-alt">
+        <section id="vision-suite" class="section">
+            <h2>Gama Vision Suite <span
+                    style="font-size: 0.9rem; vertical-align: middle; background: var(--primary); color: #000; padding: 4px 10px; border-radius: 4px; margin-left: 10px; font-weight: 900;">NEW</span>
+            </h2>
+            <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">A
+                nova fronteira de processamento de imagem local. Motores neurais, aceleração WebGL e algoritmos pesados
+                rodando diretamente no seu navegador, sem servidores.</p>
+
+            <div class="grid">
+                <!-- Color Ultra -->
+                <div class="card" style="border-top: 3px solid var(--vision-color);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-color); border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.1);">
+                        🧠 Tensor / WebGL</div>
+                    <h3>Gama Color Ultra</h3>
+                    <p>IA que coloriza imagens preto e branco em tempo real. Utiliza clusterização neural e mapas de
+                        gradiente para inferir topografia de luminância e aplicar texturas RGB precisas mantendo o
+                        contraste original.</p>
+                    <a href="https://gamacolor.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-color);">Testar Colorização ➔</a>
+                </div>
+
+                <!-- Extend Ultra -->
+                <div class="card" style="border-top: 3px solid var(--vision-extend);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-extend); border-color: rgba(14, 165, 233, 0.3); background: rgba(14, 165, 233, 0.1);">
+                        🔍 Super-Res Engine</div>
+                    <h3>Gama Extend Ultra</h3>
+                    <p>Upscaler de resolução neural extrema. Aplica interpolação bicúbica acoplada a máscaras de
+                        convolução (Unsharp Mask Kernel) para extrapolar a contagem de pixels de imagens pequenas sem
+                        perdas ou blur.</p>
+                    <a href="https://gamaextend.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-extend);">Fazer Upscale ➔</a>
+                </div>
+
+                <!-- Luma Pro -->
+                <div class="card" style="border-top: 3px solid var(--vision-luma);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-luma); border-color: rgba(34, 211, 238, 0.3); background: rgba(34, 211, 238, 0.1);">
+                        📸 Raw Processing</div>
+                    <h3>Gama Luma Pro</h3>
+                    <p>Aprimoramento fotográfico matemático profundo. Correção Gamma dinâmica e curvas S-Curve para
+                        recuperação de sombras, além de extração complexa de metadados EXIF do header binário.</p>
+                    <a href="https://gamaluma.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-luma);">Corrigir Iluminação ➔</a>
+                </div>
+
+                <!-- Obliterator Pro -->
+                <div class="card" style="border-top: 3px solid var(--vision-oblit);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-oblit); border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1);">
+                        🎯 Zero-Blur Clone</div>
+                    <h3>Gama Obliterator</h3>
+                    <p>Remoção cirúrgica de marcas e objetos indesejados. Emprega um scanner heurístico dinâmico em
+                        tempo real e um motor de clonagem de textura estrutural que reescreve pixels com 0% de borrado.
+                    </p>
+                    <a href="https://gamaobliterator.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-oblit);">Apagar Elementos ➔</a>
+                </div>
+
+                <!-- Repainter Ultra -->
+                <div class="card" style="border-top: 3px solid var(--vision-repaint);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-repaint); border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1);">
+                        🎨 Chroma-Shift</div>
+                    <h3>Gama Repainter</h3>
+                    <p>Substituição de cor matricial avançada. Preserva a iluminação (Luma) exata do pixel original
+                        enquanto aplica transições HSL em tempo real baseadas em tolerância espacial e distância
+                        euclidiana.</p>
+                    <a href="https://gamarepainter.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-repaint);">Substituir Cores ➔</a>
+                </div>
+
+                <!-- SISTEMA: GAMA CAPTURE -->
+                <div class="card" style="border-top: 3px solid #eab308;">
+                    <div class="badge badge-speed"
+                        style="color: #eab308; border-color: rgba(234, 179, 8, 0.3); background: rgba(234, 179, 8, 0.1);">
+                        🎥 Serverless Studio</div>
+                    <h3>Gama Capture</h3>
+                    <p>O substituto para o Loom. Gravação simultânea de Tela, Webcam e Microfone. Realiza a fusão PiP
+                        (Picture-in-Picture) e mixagem de áudio via WebRTC e Canvas API em tempo real, gerando arquivos
+                        pesados sem latência ou servidores.</p>
+                    <a href="https://gamacapture.vercel.app/" target="_blank" class="card-link"
+                        style="color: #eab308;">Abrir Estúdio
+                        ➔</a>
+                </div>
             </div>
-            <div class="card" style="border-top: 3px solid var(--secondary);">
-                <h3>⚡ Código Puro & Leve</h3>
-                <p>Sem React, sem Vue, sem dependências infladas. Construímos jogos e sistemas inteiros em arquivos únicos (Single File) usando apenas HTML, CSS e Web APIs nativas do navegador.</p>
-            </div>
-            <div class="card" style="border-top: 3px solid var(--warning);">
-                <h3>🔥 Foco em Entrega Real</h3>
-                <p>Nós não vendemos horas infinitas de refatoração. Vendemos ideias transformadas em código funcional, testado e em produção no menor tempo humano e de máquina possível.</p>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <section id="portfolio" class="section">
-        <h2>Produzidos em 1 Dia</h2>
-        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">A prova técnica de que velocidade e complexidade podem andar juntas.</p>
-        
+        <h2>Apps</h2>
+        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">Nossas
+            provas de conceito originais. Onde velocidade e complexidade arquitetural andam juntas.</p>
+
         <div class="grid">
             <!-- PROJETO PRINCIPAL: GAMASHARE -->
             <div class="card featured">
-                <div class="speed-badge">⏱️ Construído em 24 Horas</div>
+                <div class="badge badge-speed">⏱️ Construído em 24 Horas</div>
                 <h3>GamaShare</h3>
-                <p>Sistema de comunicação P2P Full-Mesh 100% descentralizado. Opera sem servidores centrais de mídia (SFU/MCU), utilizando WebRTC nativo, topologia adaptativa com self-healing, transferência veloz de arquivos e moderação de rede distribuída.</p>
-                <a href="https://gamashare.vercel.app" target="_blank" class="card-link">Testar Protocolo ➔</a>
+                <p>Sistema de comunicação P2P Full-Mesh 100% descentralizado. Opera sem servidores centrais de mídia,
+                    utilizando WebRTC nativo, topologia adaptativa com self-healing e transferência veloz de arquivos.
+                </p>
+                <a href="https://gamashare.vercel.app" target="_blank" class="card-link"
+                    style="color: var(--primary);">Testar Protocolo ➔</a>
             </div>
 
             <!-- JOGO 1: TILTOMON -->
             <div class="card">
-                <div class="speed-badge">⏱️ Construído em 24 Horas</div>
+                <div class="badge badge-speed">⏱️ Construído em 24 Horas</div>
                 <h3>Tiltomon</h3>
-                <p>Motor de jogo construído do zero no Canvas. Onde Roguelite encontra Pong. Possui sistema de economia, upgrades dinâmicos e uma trilha sonora procedural gerada nativamente pela Web Audio API.</p>
-                <a href="https://tiltomon.vercel.app" target="_blank" class="card-link" style="color: var(--secondary);">Jogar Agora ➔</a>
+                <p>Motor de jogo construído do zero no Canvas. Onde Roguelite encontra Pong. Possui sistema de economia,
+                    upgrades dinâmicos e uma trilha sonora procedural gerada nativamente pela Web Audio API.</p>
+                <a href="https://tiltomon.vercel.app" target="_blank" class="card-link"
+                    style="color: var(--secondary);">Jogar Agora ➔</a>
             </div>
 
             <!-- JOGO 2: RECREATOR -->
             <div class="card">
-                <div class="speed-badge">⏱️ Construído em 24 Horas</div>
+                <div class="badge badge-speed">⏱️ Construído em 24 Horas</div>
                 <h3>Recreator</h3>
-                <p>Simulação 3D imersiva de visualização de dados espaciais. Construída utilizando Three.js puro, explorando a arqueologia digital da informação através de renderização no navegador.</p>
-                <a href="https://recreatorofthepast.vercel.app" target="_blank" class="card-link" style="color: #fff;">Abrir Simulação ➔</a>
+                <p>Simulação 3D imersiva de visualização de dados espaciais. Construída utilizando Three.js puro,
+                    explorando a arqueologia digital da informação através de renderização avançada no navegador.</p>
+                <a href="https://recreatorofthepast.vercel.app" target="_blank" class="card-link"
+                    style="color: #fff;">Abrir Simulação ➔</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="metodo" class="section">
+        <h2>A Engenharia por Trás</h2>
+        <div class="grid">
+            <div class="card" style="border-top: 3px solid var(--primary);">
+                <h3>🤖 IA como Arquiteta</h3>
+                <p>Não escrevemos boilerplate manual. Orquestramos matrizes e algoritmos através de Engenharia de
+                    Prompts avançada. A IA (Claude/GPT) atua como compradora do código bruto enquanto focamos no design
+                    criativo e matemático.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--secondary);">
+                <h3>⚡ Vanilla & Web APIs</h3>
+                <p>Sem pacotes pesados. Extraímos poder máximo do navegador utilizando WebGL, Canvas API, Web Audio API,
+                    FileReader e Tensores locais nativos, mantendo o software em Single Files de alta performance.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--warning);">
+                <h3>🔥 Foco em Entrega Real</h3>
+                <p>Construímos de forma incremental. Não gastamos meses planejando refatorações. Vendemos ideias
+                    matemáticas transformadas em código funcional, testado e em produção no menor tempo humano possível.
+                </p>
             </div>
         </div>
     </section>
 
     <section id="prompt" class="section">
         <h2>O "Prompt Alma"</h2>
-        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 40px; font-size: 1.1rem;">O segredo por trás da nossa velocidade absurda. A base lógica que injetamos na IA para criar jogos completos.</p>
-        
+        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 40px; font-size: 1.1rem;">A base
+            lógica que injetamos na IA para criar sistemas ultrarrápidos, polidos e sem dependências.</p>
+
         <div class="prompt-container">
             <div class="prompt-header">
-                <span style="font-family: 'Fira Code'; font-size: 0.85rem; font-weight: bold; color: #fff;">game_dev_architect_v2.md</span>
-                <button class="btn" onclick="copyPrompt()" id="copyBtn" style="background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 8px 16px; font-size: 0.75rem;">COPIAR PROMPT</button>
+                <span
+                    style="font-family: 'Fira Code'; font-size: 0.85rem; font-weight: bold; color: #fff;">gama_sys_architect_v3.md</span>
+                <button class="btn" onclick="copyPrompt()" id="copyBtn"
+                    style="background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 8px 16px; font-size: 0.75rem;">COPIAR
+                    PROMPT</button>
             </div>
-            <div class="prompt-body" id="promptText">Aja como um Desenvolvedor de Jogos Sênior especialista em HTML5, Canvas 2D e Vanilla JavaScript.
-Sua missão é criar um jogo completo, polido e de nível comercial em um ÚNICO ARQUIVO HTML (contendo CSS e JS inline).
+            <div class="prompt-body" id="promptText">Aja como um Engenheiro de Software Sênior especialista em Vanilla
+                JS, Algoritmos Complexos e Web APIs nativas (Canvas, WebGL, FileReader, WebRTC).
+                Sua missão é criar uma ferramenta profissional, polida e de nível comercial em um ÚNICO ARQUIVO HTML
+                (contendo CSS via Tailwind CDN e JS inline).
 
-O gênero e o tema do jogo serão: [INSERIR GÊNERO/TEMA AQUI].
+                A ferramenta será: [INSERIR DESCRIÇÃO DO SISTEMA/VISUALIZADOR/EDITOR AQUI].
 
-Independentemente do gênero escolhido, o código final DEVE OBRIGATORIAMENTE seguir a seguinte arquitetura e conter todos os requisitos abaixo:
+                Independentemente da complexidade solicitada, o código final DEVE OBRIGATORIAMENTE seguir a seguinte
+                arquitetura:
 
-1. REGRA DE OURO (ZERO ASSETS EXTERNOS):
-Não use nenhuma imagem, sprite, arquivo de áudio (.mp3/.wav) ou biblioteca externa (nem Phaser, nem Three.js). TUDO deve ser gerado via código (Canvas API para gráficos e Web Audio API para músicas e efeitos sonoros).
+                1. REGRA DE OURO (ZERO ASSETS EXTERNOS):
+                Não use imagens externas, backend, arquivos de áudio ou frameworks pesados como React/Vue. Toda a
+                interface deve ser renderizada via Tailwind CSS e toda a lógica matemática/dados rodará no lado do
+                cliente (Client-Side Processing).
 
-2. ESTRUTURA E ARQUITETURA (ENGINE):
-- O jogo deve rodar em um Game Loop baseado em requestAnimationFrame usando Delta Time (dt).
-- Arquitetura Orientada a Objetos (Classes ES6).
-- Gerenciamento de Estados: MENU, PLAYING, PAUSED, LEVELUP, GAMEOVER.
+                2. PERFORMANCE & ARQUITETURA:
+                - Utilize Classes ES6 para gerenciar as "Engines" do sistema.
+                - Se for processamento de imagem: Acesse os dados bruto via `ctx.getImageData`, opere os canais RGBA com
+                Uint8ClampedArray e evite loops aninhados lentos.
+                - Gerencie Estados de UI de forma clara (Carregando, Processando, Finalizado).
 
-3. PROGRESSÃO E SISTEMAS (DNA ROGUELITE):
-- In-Game: Sistema de Waves/Hordas. Inimigos dropam XP. Ao encher a barra, pausa e oferece 3 Cartas de Upgrade.
-- Meta-Jogo: Ganhe "Coins" ao jogar. Menu Principal com Loja de Upgrades Permanentes.
-- Save: Salve tudo no localStorage.
+                3. DESIGN SYSTEM (CYBER/MODERN):
+                - Fundo muito escuro (#050505), fontes modernas (JetBrains Mono e Rajdhani/Inter).
+                - Bordas sutis, glassmorphism sutil (backdrop-blur) e acentos de cores vibrantes.
+                - Feedbacks visuais intensos para o usuário (Loaders de console, badges piscando, logs simulados).
 
-4. ÁUDIO PROCEDURAL (WEB AUDIO API):
-- Crie um "Audio Engine" encapsulado. Música gerada por osciladores tocando em Loop.
-- Sintetizador de SFX para ações do jogo.
+                4. TRATAMENTO DE ERROS & UX:
+                - Valide inputs (ex: Checar se o arquivo é imagem, checar limites de memória para resoluções gigantes).
+                - Se a operação for pesada, utilize `setTimeout` ou `requestAnimationFrame` para não "congelar" a UI
+                (permitindo que loaders rodem enquanto o processamento JS ocorre em background).
 
-5. MOBILE FIRST:
-- Controles híbridos (Teclado/Mouse e Touch).
-- Bloqueio de Retrato (Pedir para girar o celular).
-
-Escreva o código fonte HTML completo, comentado e pronto para rodar.</div>
+                Escreva o código fonte HTML completo, comentado e pronto para produção em ambiente real.</div>
         </div>
 
         <!-- PÍLULA DE CONHECIMENTO -->
         <div class="knowledge-pill">
-            <strong>⚠️ Pílula de Conhecimento: Limite de Tokens da IA</strong>
-            <p>Não basta jogar o prompt acima e esperar um milagre! As IAs atuais (ChatGPT, Claude, Gemini) possuem um limite de "tokens" (comprimento de memória e resposta). Se você pedir o código inteiro de um jogo complexo de uma só vez, ele provavelmente será cortado no meio ou virá com bugs estruturais.</p>
-            <p style="color: #fff; font-weight: 600; margin-top: 15px;">Como fazer do jeito certo (O Método Gama):</p>
+            <strong>⚠️ Pílula de Conhecimento: Limite de Contexto e O Método de Partição</strong>
+            <p>Sistemas como o *Gama Repainter* ou *Obliterator* contêm matemática complexa (Cálculos de distância
+                Euclidiana de cor, Convolução de Matrizes, etc). Se você pedir para a IA criar tudo em um único prompt
+                de uma vez, ela omitirá detalhes ou criará bugs de performance.</p>
+            <p style="color: #fff; font-weight: 600; margin-top: 15px;">O Pipeline de Construção:</p>
             <ol>
-                <li>Use o prompt acima apenas para definir a <strong>estrutura inicial e as regras</strong> da sessão.</li>
-                <li>Peça o código por partes: <em>"Primeiro, me dê apenas a estrutura HTML, o CSS e o Game Loop vazio em JS"</em>.</li>
-                <li>Depois, avance para a lógica: <em>"Ótimo, agora crie a Classe do Player e os inputs de controle"</em>.</li>
-                <li>Por fim, polimento: <em>"Agora adicione o Audio Engine procedural"</em>.</li>
+                <li>Use o prompt acima definindo a <strong>casca visual e a infraestrutura HTML/Tailwind</strong>
+                    primeiro.</li>
+                <li>Teste a UI. Se estiver perfeita, envie o segundo comando: <em>"A UI está ótima. Agora vamos focar
+                        APENAS na função matemática de extração do histograma. Crie o algoritmo para ler os pixels com
+                        performance."</em></li>
+                <li>Avance módulo por módulo (Upload -> Preview -> Algoritmo Core -> Exportação).</li>
+                <li>Peça micro-otimizações: <em>"Esse loop for duplo está travando a tela. Reescreva utilizando Web
+                        Workers ou dividindo em chunks no RequestAnimationFrame."</em></li>
             </ol>
-            <p>Vá copiando e colando incrementalmente no seu arquivo. O código do "Recreator" e "Tiltomon" foi construído interagindo dezenas de vezes com a IA, testando no navegador, pedindo melhorias e correções a cada passo.</p>
         </div>
 
     </section>
@@ -278,7 +672,8 @@ Escreva o código fonte HTML completo, comentado e pronto para rodar.</div>
     <footer>
         <div class="logo" style="margin-bottom: 15px; font-size: 1.5rem;">GAMA <span>NEXT</span></div>
         <p style="color: #666; font-size: 0.9rem; font-weight: bold;">Velocidade. IA. Código Puro.</p>
-        <p style="color: #444; font-size: 0.8rem; margin-top: 30px;">&copy; 2026 Gama Next. Construído com Inteligência.</p>
+        <p style="color: #444; font-size: 0.8rem; margin-top: 30px;">&copy; 2026 Gama Next. Construído com Inteligência
+            Artificial e Web APIs.</p>
     </footer>
 
     <script>
@@ -289,10 +684,10 @@ Escreva o código fonte HTML completo, comentado e pronto para rodar.</div>
                 btn.style.background = "var(--primary)";
                 btn.style.color = "#000";
                 btn.innerText = "COPIADO!";
-                setTimeout(() => { 
+                setTimeout(() => {
                     btn.style.background = "transparent";
                     btn.style.color = "var(--primary)";
-                    btn.innerText = "COPIAR PROMPT"; 
+                    btn.innerText = "COPIAR PROMPT";
                 }, 2000);
             });
         }
