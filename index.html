@@ -4,416 +4,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gama Next | IA & Game Dev</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Fira+Code:wght@400;500&display=swap"
-        rel="stylesheet">
+    <title>Gama Next | Jogos e Sistemas com IA em Tempo Recorde</title>
+    <!-- Fontes limpas e modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0d1117;
-            --text-color: #c9d1d9;
-            --primary-color: #58a6ff;
-            --secondary-color: #8a2be2;
-            --accent-color: #00ffcc;
-            /* Cor para o Recreator */
-            --card-bg: #161b22;
-            --code-bg: #010409;
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --primary: #00ffcc; /* Cyan Principal */
+            --secondary: #ff0055; /* Rosa/Vermelho Velocidade */
+            --warning: #ffcc00; /* Amarelo Alerta/Pílula */
+            --card-bg: #0f0f0f;
+            --code-bg: #090909;
+            --border-color: #222;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
 
         /* HEADER */
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background-color: rgba(13, 17, 23, 0.95);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #30363d;
-            backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center; padding: 20px 5%;
+            background-color: rgba(5, 5, 5, 0.9); position: fixed; width: 100%; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px);
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 900;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; color: #fff; text-decoration: none; text-transform: uppercase;}
+        .logo span { color: var(--primary); }
 
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 700;
-            transition: color 0.3s;
-            font-size: 0.9rem;
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-        }
+        nav { display: flex; gap: 25px; }
+        nav a { color: #aaa; text-decoration: none; font-weight: 600; transition: color 0.2s; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;}
+        nav a:hover { color: #fff; }
 
         /* HERO SECTION */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 100px 20px 20px 20px;
-            background: radial-gradient(circle at center, #1a2333 0%, var(--bg-color) 70%);
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            padding: 120px 20px 60px 20px;
+            background: radial-gradient(circle at 50% 30%, #111 0%, var(--bg-color) 70%);
+            /* Padrão de grade super sutil no fundo */
+            background-image: linear-gradient(rgba(0, 255, 204, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 204, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: #ffffff;
-            line-height: 1.2;
+        .hero-tag {
+            color: var(--primary); font-family: 'Fira Code', monospace; font-size: 0.9rem; font-weight: bold;
+            margin-bottom: 25px; padding: 6px 16px; border: 1px solid var(--primary); border-radius: 20px; background: rgba(0, 255, 204, 0.05);
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 40px;
-            color: #8b949e;
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 20px; color: #ffffff; line-height: 1.1; font-weight: 900; letter-spacing: -1px;}
+        
+        /* Correção do texto vazado: Fundo sólido com brilho suave */
+        .hero h1 span { 
+            color: var(--primary); 
+            text-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
         }
+
+        .hero p { font-size: clamp(1rem, 4vw, 1.25rem); max-width: 800px; margin-bottom: 40px; color: #aaa; }
+        .hero p strong { color: #fff; font-weight: 800; }
+
+        .cta-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
 
         .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.3s;
-            display: inline-block;
+            padding: 16px 32px; border-radius: 6px; font-size: 1rem; font-weight: 800; cursor: pointer; text-decoration: none; transition: 0.2s; border: none; text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: #090c10;
-        }
+        .btn-primary { background: var(--primary); color: #000; box-shadow: 0 4px 15px rgba(0,255,204,0.2); }
+        .btn-primary:hover { background: #fff; box-shadow: 0 4px 25px rgba(255,255,255,0.4); transform: translateY(-2px);}
+        
+        .btn-outline { background: transparent; color: #fff; border: 2px solid #333; }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px);}
 
-        .btn-primary:hover {
-            background-color: #79b8ff;
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(88, 166, 255, 0.4);
-        }
+        /* SECTIONS */
+        .section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+        .section h2 { font-size: 2.8rem; margin-bottom: 50px; text-align: center; color: #fff; font-weight: 900; letter-spacing: -1px;}
 
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            margin-left: 10px;
-        }
+        /* GRID SYSTEM */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 25px; width: 100%; }
 
-        .btn-secondary:hover {
-            background-color: rgba(88, 166, 255, 0.1);
-            transform: scale(1.05);
-        }
-
-        /* SERVICES SECTION */
-        .section {
-            padding: 100px 20px;
-            text-align: center;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        .section-subtitle {
-            max-width: 800px;
-            margin: 0 auto 60px auto;
-            color: #8b949e;
-            font-size: 1.1rem;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        /* CARDS */
         .card {
-            background-color: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: 12px;
-            border: 1px solid #30363d;
-            transition: transform 0.3s, border-color 0.3s;
+            background-color: var(--card-bg); padding: 40px 30px; border-radius: 12px; border: 1px solid var(--border-color);
+            transition: 0.3s; display: flex; flex-direction: column; position: relative;
+        }
+        .card:hover { border-color: #555; transform: translateY(-5px); background-color: #141414; }
+        .card.featured { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,255,204,0.05); }
+        .card.featured:hover { box-shadow: 0 10px 40px rgba(0,255,204,0.15); }
+
+        .card h3 { color: #fff; margin-bottom: 15px; font-size: 1.6rem; font-weight: 800;}
+        .card p { color: #aaa; font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; line-height: 1.7;}
+
+        /* BADGE DE VELOCIDADE */
+        .speed-badge {
+            display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 204, 0, 0.1);
+            color: var(--warning); font-family: 'Fira Code', monospace; font-size: 0.75rem; font-weight: 700;
+            padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255, 204, 0, 0.3);
+            margin-bottom: 20px; width: fit-content; text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
+        .card-link {
+            color: var(--primary); text-decoration: none; font-weight: 800; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 5px; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s;
         }
+        .card-link:hover { color: #fff; padding-left: 5px;}
 
-        .card h3 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
+        /* PROMPT AREA */
+        .prompt-container { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; margin-top: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);}
+        .prompt-header { background: #111; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
+        .prompt-body { padding: 30px; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #00ffcc; max-height: 500px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; line-height: 1.6;}
+
+        /* PÍLULA DE CONHECIMENTO */
+        .knowledge-pill {
+            background: rgba(255, 204, 0, 0.05);
+            border-left: 4px solid var(--warning);
+            padding: 25px;
+            margin-top: 30px;
+            border-radius: 0 12px 12px 0;
+            border-top: 1px solid rgba(255, 204, 0, 0.1);
+            border-right: 1px solid rgba(255, 204, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 204, 0, 0.1);
+            color: #ddd;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
-
-        /* GAME PORTFOLIO SECTION - REDESIGNED */
-        .game-section {
-            background: linear-gradient(180deg, var(--bg-color), #121016);
-            padding: 100px 20px;
-            border-top: 1px solid #30363d;
-            border-bottom: 1px solid #30363d;
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .game-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #30363d;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .game-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .game-content {
-            padding: 30px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .game-tag {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .tiltomon-card {
-            border-top: 4px solid var(--secondary-color);
-        }
-
-        .tiltomon-card:hover {
-            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
-        }
-
-        .tiltomon-card .game-tag {
-            color: var(--secondary-color);
-        }
-
-        .recreator-card {
-            border-top: 4px solid var(--accent-color);
-        }
-
-        .recreator-card:hover {
-            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.2);
-        }
-
-        .recreator-card .game-tag {
-            color: var(--accent-color);
-        }
-
-        .game-card h3 {
-            font-size: 2rem;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        .game-card p {
-            color: #8b949e;
-            margin-bottom: 25px;
-            font-size: 1rem;
-        }
-
-        .game-btn {
-            margin-top: auto;
-            text-align: center;
-            padding: 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .btn-play-tiltomon {
-            background: linear-gradient(90deg, #6a0dad, var(--secondary-color));
-            color: white;
-        }
-
-        .btn-play-tiltomon:hover {
-            box-shadow: 0 0 15px var(--secondary-color);
-        }
-
-        .btn-play-recreator {
-            background: linear-gradient(90deg, #008f7a, var(--accent-color));
-            color: #000;
-        }
-
-        .btn-play-recreator:hover {
-            box-shadow: 0 0 15px var(--accent-color);
-        }
-
-
-        /* PROMPT ALMA SECTION */
-        .prompt-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: var(--code-bg);
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            text-align: left;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-        }
-
-        .prompt-header {
-            background-color: var(--card-bg);
-            padding: 15px 20px;
-            border-bottom: 1px solid #30363d;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .prompt-header span {
-            font-weight: bold;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .copy-btn {
-            background-color: #238636;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: background 0.2s;
-        }
-
-        .copy-btn:hover {
-            background-color: #2ea043;
-        }
-
-        .prompt-body {
-            padding: 30px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
-            color: #79c0ff;
-            line-height: 1.8;
-            max-height: 400px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-        }
-
-        .prompt-body span.highlight {
-            color: #ff7b72;
-        }
-
-        .prompt-warning {
-            max-width: 900px;
-            margin: 30px auto 0 auto;
-            background-color: rgba(210, 153, 34, 0.15);
-            border: 1px solid rgba(210, 153, 34, 0.4);
-            border-left: 4px solid #d29922;
-            padding: 20px;
-            text-align: left;
-            border-radius: 5px;
-        }
-
-        .prompt-warning h4 {
-            color: #d29922;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .knowledge-pill strong { color: var(--warning); display: block; margin-bottom: 15px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;}
+        .knowledge-pill ol { margin-left: 20px; margin-top: 15px; margin-bottom: 15px; color: #fff;}
+        .knowledge-pill li { margin-bottom: 10px; }
+        .knowledge-pill p { margin-bottom: 10px; color: #aaa; }
 
         /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 40px;
-            background-color: var(--card-bg);
-            border-top: 1px solid #30363d;
-            font-size: 0.9rem;
-            color: #8b949e;
-        }
+        footer { text-align: center; padding: 80px 20px; background-color: #020202; border-top: 1px solid var(--border-color); }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 15px;
-            }
-
-            nav {
-                margin-top: 15px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-
-            nav a {
-                margin: 0;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .btn {
-                display: block;
-                margin: 10px auto;
-                width: 100%;
-            }
-
-            .btn-secondary {
-                margin-left: 0;
-            }
-
-            .prompt-body {
-                font-size: 0.8rem;
-            }
+            header { flex-direction: column; padding: 15px; }
+            nav { margin-top: 15px; gap: 15px; flex-wrap: wrap; justify-content: center; }
+            .hero { padding-top: 160px; }
+            .section { padding: 80px 20px; }
+            .section h2 { font-size: 2.2rem; }
+            .card h3 { font-size: 1.4rem; }
+            .prompt-body { padding: 15px; font-size: 0.75rem; }
+            .knowledge-pill { padding: 15px; font-size: 0.85rem;}
         }
     </style>
 </head>
@@ -421,173 +151,149 @@
 <body>
 
     <header>
-        <div class="logo">Gama Next</div>
+        <a href="#" class="logo">GAMA <span>NEXT</span></a>
         <nav>
-            <a href="#servicos">Serviços</a>
-            <a href="#jogos">Jogos</a>
-            <a href="#prompt">Prompt Mestre</a>
-            <a href="#contato">Contato</a>
+            <a href="#metodo">O Método</a>
+            <a href="#portfolio">Projetos em 24h</a>
+            <a href="#prompt">Prompt Master</a>
+            <a href="mailto:neoandrevictor@gmail.com">Contato</a>
         </nav>
     </header>
 
     <section class="hero">
-        <h1>Transformando Ideias em<br>Realidade Digital</h1>
-        <p>A Gama Next une a tecnologia da Inteligência Artificial com a arte do desenvolvimento de jogos para criar
-            experiências imersivas e softwares avançados.</p>
-        <div>
-            <a href="#jogos" class="btn btn-primary">Jogar Agora</a>
-            <a href="#prompt" class="btn btn-secondary">Acessar Prompt IA</a>
+        <div class="hero-tag">AI-DRIVEN DEVELOPMENT</div>
+        <h1>Jogos e Sistemas.<br><span>Em Tempo Recorde.</span></h1>
+        <p>Desenvolvimento focado em performance extrema, Vanilla JS e Web APIs. O que demorava meses, a Gama Next constrói do zero. <strong>Todos os projetos abaixo foram feitos em apenas 1 dia usando Inteligência Artificial.</strong></p>
+        <div class="cta-group">
+            <a href="#portfolio" class="btn btn-primary">Ver Projetos (Criados em 24h)</a>
+            <a href="#prompt" class="btn btn-outline">Ver o Prompt Mestre</a>
         </div>
     </section>
 
-    <section id="servicos" class="section">
-        <h2>O que nós fazemos</h2>
-        <p class="section-subtitle">Soluções completas para o mundo digital moderno.</p>
-        <div class="services-grid">
-            <div class="card">
-                <h3>🤖 Consultoria em IA</h3>
-                <p>Implementamos soluções de Inteligência Artificial para otimizar processos, treinar modelos locais e
-                    gerar insights estratégicos para sua empresa.</p>
+    <section id="metodo" class="section">
+        <h2>Como somos tão rápidos?</h2>
+        <div class="grid">
+            <div class="card" style="border-top: 3px solid var(--primary);">
+                <h3>🤖 IA como Co-Piloto</h3>
+                <p>Não escrevemos boilerplate. Orquestramos a arquitetura através de Engenharia de Prompts avançada, deixando a IA gerar a lógica bruta enquanto focamos no design criativo de sistemas.</p>
             </div>
-            <div class="card">
-                <h3>🎓 Cursos de Tecnologia</h3>
-                <p>Capacitação técnica focada no mercado real. Aprenda desde Prompt Engineering até o desenvolvimento de
-                    arquiteturas de software complexas.</p>
+            <div class="card" style="border-top: 3px solid var(--secondary);">
+                <h3>⚡ Código Puro & Leve</h3>
+                <p>Sem React, sem Vue, sem dependências infladas. Construímos jogos e sistemas inteiros em arquivos únicos (Single File) usando apenas HTML, CSS e Web APIs nativas do navegador.</p>
             </div>
-            <div class="card">
-                <h3>🎮 Fabricação de Jogos</h3>
-                <p>Desenvolvimento full-cycle de jogos. Do conceito à publicação, criamos experiências interativas com
-                    mecânicas viciantes e visual polido.</p>
+            <div class="card" style="border-top: 3px solid var(--warning);">
+                <h3>🔥 Foco em Entrega Real</h3>
+                <p>Nós não vendemos horas infinitas de refatoração. Vendemos ideias transformadas em código funcional, testado e em produção no menor tempo humano e de máquina possível.</p>
             </div>
         </div>
     </section>
 
-    <!-- NOVA SEÇÃO DE JOGOS -->
-    <section id="jogos" class="game-section">
-        <div style="text-align: center; margin-bottom: 50px;">
-            <h2>Nosso Portfólio de Jogos</h2>
-            <p class="section-subtitle">Experiências desenvolvidas 100% via código e engenharia de prompt.</p>
-        </div>
-
-        <div class="games-grid">
+    <section id="portfolio" class="section">
+        <h2>Produzidos em 1 Dia</h2>
+        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">A prova técnica de que velocidade e complexidade podem andar juntas.</p>
+        
+        <div class="grid">
+            <!-- PROJETO PRINCIPAL: GAMASHARE -->
+            <div class="card featured">
+                <div class="speed-badge">⏱️ Construído em 24 Horas</div>
+                <h3>GamaShare</h3>
+                <p>Sistema de comunicação P2P Full-Mesh 100% descentralizado. Opera sem servidores centrais de mídia (SFU/MCU), utilizando WebRTC nativo, topologia adaptativa com self-healing, transferência veloz de arquivos e moderação de rede distribuída.</p>
+                <a href="https://gamashare.vercel.app" target="_blank" class="card-link">Testar Protocolo ➔</a>
+            </div>
 
             <!-- JOGO 1: TILTOMON -->
-            <div class="game-card tiltomon-card">
-                <div class="game-content">
-                    <span class="game-tag">Arcade / Roguelite</span>
-                    <h3>Tiltomon</h3>
-                    <p>Um híbrido frenético entre Pong e RPG. Não é apenas rebater a bola: você deve evoluir, comprar
-                        upgrades na loja e escolher cartas de habilidades. O destaque é a <strong>Audio Engine
-                            Procedural</strong>, que cria trilhas de Drum & Bass e Heavy Metal em tempo real usando Web
-                        Audio API.</p>
-                    <a href="https://tiltomon.vercel.app" target="_blank" class="game-btn btn-play-tiltomon">Jogar
-                        Tiltomon ➤</a>
-                </div>
+            <div class="card">
+                <div class="speed-badge">⏱️ Construído em 24 Horas</div>
+                <h3>Tiltomon</h3>
+                <p>Motor de jogo construído do zero no Canvas. Onde Roguelite encontra Pong. Possui sistema de economia, upgrades dinâmicos e uma trilha sonora procedural gerada nativamente pela Web Audio API.</p>
+                <a href="https://tiltomon.vercel.app" target="_blank" class="card-link" style="color: var(--secondary);">Jogar Agora ➔</a>
             </div>
 
             <!-- JOGO 2: RECREATOR -->
-            <div class="game-card recreator-card">
-                <div class="game-content">
-                    <span class="game-tag">Simulação / IA / 3D</span>
-                    <h3>Recreator of The Past</h3>
-                    <p>Uma experiência de "arqueologia digital" e visualização de dados. O jogo varre a Wikipedia em
-                        tempo real, criando uma galáxia 3D de conhecimento interconectado. Sua missão é treinar uma IA
-                        local navegando pelos nós de informação. Uma demonstração de poder do Three.js.</p>
-                    <a href="https://recreatorofthepast.vercel.app" target="_blank"
-                        class="game-btn btn-play-recreator">Explorar Simulação ➤</a>
-                </div>
+            <div class="card">
+                <div class="speed-badge">⏱️ Construído em 24 Horas</div>
+                <h3>Recreator</h3>
+                <p>Simulação 3D imersiva de visualização de dados espaciais. Construída utilizando Three.js puro, explorando a arqueologia digital da informação através de renderização no navegador.</p>
+                <a href="https://recreatorofthepast.vercel.app" target="_blank" class="card-link" style="color: #fff;">Abrir Simulação ➔</a>
             </div>
-
         </div>
     </section>
 
-    <!-- SEÇÃO PROMPT ALMA -->
     <section id="prompt" class="section">
-        <h2>O Segredo da Gama Next</h2>
-        <p class="section-subtitle">Este é o <strong>"Prompt Alma"</strong> que usamos para criar a base dos nossos
-            jogos. Copie e use em IAs como ChatGPT ou Claude.</p>
-
+        <h2>O "Prompt Alma"</h2>
+        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 40px; font-size: 1.1rem;">O segredo por trás da nossa velocidade absurda. A base lógica que injetamos na IA para criar jogos completos.</p>
+        
         <div class="prompt-container">
             <div class="prompt-header">
-                <span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg> Master Prompt v1.0</span>
-                <button class="copy-btn" onclick="copyText()">Copiar Prompt</button>
+                <span style="font-family: 'Fira Code'; font-size: 0.85rem; font-weight: bold; color: #fff;">game_dev_architect_v2.md</span>
+                <button class="btn" onclick="copyPrompt()" id="copyBtn" style="background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 8px 16px; font-size: 0.75rem;">COPIAR PROMPT</button>
             </div>
-            <div class="prompt-body" id="textToCopy">Aja como um Desenvolvedor de Jogos Sênior especialista em HTML5,
-                Canvas 2D e Vanilla JavaScript.
-                Sua missão é criar um jogo completo, polido e de nível comercial em um ÚNICO ARQUIVO HTML (contendo CSS
-                e JS inline).
+            <div class="prompt-body" id="promptText">Aja como um Desenvolvedor de Jogos Sênior especialista em HTML5, Canvas 2D e Vanilla JavaScript.
+Sua missão é criar um jogo completo, polido e de nível comercial em um ÚNICO ARQUIVO HTML (contendo CSS e JS inline).
 
-                O gênero e o tema do jogo serão: <span class="highlight">[INSERIR GÊNERO/TEMA AQUI]</span>.
+O gênero e o tema do jogo serão: [INSERIR GÊNERO/TEMA AQUI].
 
-                Independentemente do gênero escolhido, o código final DEVE OBRIGATORIAMENTE seguir a seguinte
-                arquitetura e conter todos os requisitos abaixo:
+Independentemente do gênero escolhido, o código final DEVE OBRIGATORIAMENTE seguir a seguinte arquitetura e conter todos os requisitos abaixo:
 
-                1. REGRA DE OURO (ZERO ASSETS EXTERNOS):
-                Não use nenhuma imagem, sprite, arquivo de áudio (.mp3/.wav) ou biblioteca externa (nem Phaser, nem
-                Three.js). TUDO deve ser gerado via código (Canvas API para gráficos e Web Audio API para músicas e
-                efeitos sonoros).
+1. REGRA DE OURO (ZERO ASSETS EXTERNOS):
+Não use nenhuma imagem, sprite, arquivo de áudio (.mp3/.wav) ou biblioteca externa (nem Phaser, nem Three.js). TUDO deve ser gerado via código (Canvas API para gráficos e Web Audio API para músicas e efeitos sonoros).
 
-                2. ESTRUTURA E ARQUITETURA (ENGINE):
-                - O jogo deve rodar em um Game Loop baseado em requestAnimationFrame usando Delta Time (dt).
-                - Arquitetura Orientada a Objetos (Classes ES6).
-                - Gerenciamento de Estados: MENU, PLAYING, PAUSED, LEVELUP, GAMEOVER.
+2. ESTRUTURA E ARQUITETURA (ENGINE):
+- O jogo deve rodar em um Game Loop baseado em requestAnimationFrame usando Delta Time (dt).
+- Arquitetura Orientada a Objetos (Classes ES6).
+- Gerenciamento de Estados: MENU, PLAYING, PAUSED, LEVELUP, GAMEOVER.
 
-                3. PROGRESSÃO E SISTEMAS (DNA ROGUELITE):
-                - In-Game: Sistema de Waves/Hordas. Inimigos dropam XP. Ao encher a barra, pausa e oferece 3 Cartas de
-                Upgrade.
-                - Meta-Jogo: Ganhe "Coins" ao jogar. Menu Principal com Loja de Upgrades Permanentes.
-                - Save: Salve tudo no localStorage.
+3. PROGRESSÃO E SISTEMAS (DNA ROGUELITE):
+- In-Game: Sistema de Waves/Hordas. Inimigos dropam XP. Ao encher a barra, pausa e oferece 3 Cartas de Upgrade.
+- Meta-Jogo: Ganhe "Coins" ao jogar. Menu Principal com Loja de Upgrades Permanentes.
+- Save: Salve tudo no localStorage.
 
-                4. ÁUDIO PROCEDURAL (WEB AUDIO API):
-                - Crie um "Audio Engine" encapsulado. Música gerada por osciladores tocando em Loop.
-                - Sintetizador de SFX para ações do jogo.
+4. ÁUDIO PROCEDURAL (WEB AUDIO API):
+- Crie um "Audio Engine" encapsulado. Música gerada por osciladores tocando em Loop.
+- Sintetizador de SFX para ações do jogo.
 
-                5. MOBILE FIRST:
-                - Controles híbridos (Teclado/Mouse e Touch).
-                - Bloqueio de Retrato (Pedir para girar o celular).
+5. MOBILE FIRST:
+- Controles híbridos (Teclado/Mouse e Touch).
+- Bloqueio de Retrato (Pedir para girar o celular).
 
-                Escreva o código fonte HTML completo, comentado e pronto para rodar.</div>
+Escreva o código fonte HTML completo, comentado e pronto para rodar.</div>
         </div>
 
-        <!-- AVISO SOBRE TOKENS -->
-        <div class="prompt-warning">
-            <h4>⚠️ Pílula de Conhecimento: Limite de Tokens da IA</h4>
-            <p><strong>Não basta jogar o prompt e esperar um milagre!</strong> As IAs atuais (ChatGPT, Claude, Gemini)
-                possuem um limite de "tokens" (comprimento de resposta). Se você pedir o código inteiro de uma vez, ele
-                provavelmente será cortado no meio ou virá com bugs.</p>
-            <p style="margin-top:10px;"><strong>Como fazer do jeito certo:</strong></p>
-            <ul style="margin-left: 20px; margin-top: 5px; font-size: 0.95rem; color: #c9d1d9;">
-                <li>Use o prompt acima para definir a estrutura inicial.</li>
-                <li>Peça o código por partes: <em>"Primeiro, me dê apenas o HTML e o CSS"</em>.</li>
-                <li>Depois peça a lógica: <em>"Agora crie a Classe do Player em JS"</em>.</li>
-                <li>Vá copiando e colando incrementalmente no seu arquivo. O código do "Recreator of The Past" e
-                    "Tiltomon" foi construído interagindo várias vezes com a IA, pedindo melhorias e correções a cada
-                    passo.</li>
-            </ul>
+        <!-- PÍLULA DE CONHECIMENTO -->
+        <div class="knowledge-pill">
+            <strong>⚠️ Pílula de Conhecimento: Limite de Tokens da IA</strong>
+            <p>Não basta jogar o prompt acima e esperar um milagre! As IAs atuais (ChatGPT, Claude, Gemini) possuem um limite de "tokens" (comprimento de memória e resposta). Se você pedir o código inteiro de um jogo complexo de uma só vez, ele provavelmente será cortado no meio ou virá com bugs estruturais.</p>
+            <p style="color: #fff; font-weight: 600; margin-top: 15px;">Como fazer do jeito certo (O Método Gama):</p>
+            <ol>
+                <li>Use o prompt acima apenas para definir a <strong>estrutura inicial e as regras</strong> da sessão.</li>
+                <li>Peça o código por partes: <em>"Primeiro, me dê apenas a estrutura HTML, o CSS e o Game Loop vazio em JS"</em>.</li>
+                <li>Depois, avance para a lógica: <em>"Ótimo, agora crie a Classe do Player e os inputs de controle"</em>.</li>
+                <li>Por fim, polimento: <em>"Agora adicione o Audio Engine procedural"</em>.</li>
+            </ol>
+            <p>Vá copiando e colando incrementalmente no seu arquivo. O código do "Recreator" e "Tiltomon" foi construído interagindo dezenas de vezes com a IA, testando no navegador, pedindo melhorias e correções a cada passo.</p>
         </div>
+
     </section>
 
-    <footer id="contato">
-        <div class="logo" style="font-size: 1.5rem; margin-bottom: 10px;">Gama Next</div>
-        <p>&copy; 2026 Gama Next. Todos os direitos reservados.</p>
-        <p>Contato: neoandrevictor@gmail.com</p>
+    <footer>
+        <div class="logo" style="margin-bottom: 15px; font-size: 1.5rem;">GAMA <span>NEXT</span></div>
+        <p style="color: #666; font-size: 0.9rem; font-weight: bold;">Velocidade. IA. Código Puro.</p>
+        <p style="color: #444; font-size: 0.8rem; margin-top: 30px;">&copy; 2026 Gama Next. Construído com Inteligência.</p>
     </footer>
 
     <script>
-        function copyText() {
-            const text = document.getElementById("textToCopy").innerText;
-            const btn = document.querySelector(".copy-btn");
-
+        function copyPrompt() {
+            const text = document.getElementById("promptText").innerText;
             navigator.clipboard.writeText(text).then(() => {
-                btn.innerText = "Copiado! ✔️";
-                btn.style.backgroundColor = "#2ea043";
-                setTimeout(() => {
-                    btn.innerText = "Copiar Prompt";
-                    btn.style.backgroundColor = "#238636";
-                }, 3000);
+                const btn = document.getElementById("copyBtn");
+                btn.style.background = "var(--primary)";
+                btn.style.color = "#000";
+                btn.innerText = "COPIADO!";
+                setTimeout(() => { 
+                    btn.style.background = "transparent";
+                    btn.style.color = "var(--primary)";
+                    btn.innerText = "COPIAR PROMPT"; 
+                }, 2000);
             });
         }
     </script>
