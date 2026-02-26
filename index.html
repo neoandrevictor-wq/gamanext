@@ -29,6 +29,16 @@
             --vision-luma: #22d3ee;
             --vision-oblit: #ef4444;
             --vision-repaint: #10b981;
+
+            /* Cores Dashboards */
+            --dash-world: #3b82f6;
+            --dash-br: #10b981;
+
+            /* Cores Audio Suite */
+            --audio-forge: #8b5cf6;
+            /* Roxo Synth */
+            --audio-dj: #f43f5e;
+            /* Rosa Deck B */
         }
 
         * {
@@ -391,6 +401,85 @@
             color: #aaa;
         }
 
+        /* MANIFESTO NANO FRONTEND */
+        .manifesto-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        .manifesto-intro strong {
+            color: #fff;
+        }
+
+        .manifesto-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        .manifesto-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .manifesto-list li::before {
+            content: "➔";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 0.8rem;
+            top: 2px;
+        }
+
+        .highlight-quote {
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.1), rgba(0, 0, 0, 0));
+            border-left: 4px solid var(--primary);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 60px auto;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .highlight-quote h3 {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 15px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .highlight-quote p {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .manifesto-outro {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .manifesto-outro p {
+            font-size: 1.1rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .manifesto-outro h3 {
+            color: #fff;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
         /* FOUNDER SECTION STYLES */
         .founder-grid {
             display: grid;
@@ -500,6 +589,10 @@
                 padding: 15px;
                 font-size: 0.75rem;
             }
+
+            .highlight-quote h3 {
+                font-size: 1.6rem;
+            }
         }
     </style>
 </head>
@@ -510,9 +603,10 @@
         <a href="#" class="logo">GAMA <span>NEXT</span></a>
         <nav>
             <a href="#vision-suite">Vision Suite</a>
-            <a href="#portfolio">Jogos & Sistemas</a>
-            <a href="#metodo">O Método</a>
+            <a href="#dashboards">Dashboards</a>
+            <a href="#audio-suite">Audio Suite</a>
             <a href="#prompt">Prompt Master</a>
+            <a href="#nano-frontend">Nano Frontend</a>
             <a href="#founder" style="color: var(--primary);">Contato / Founder</a>
         </nav>
     </header>
@@ -521,15 +615,16 @@
         <div class="hero-tag">AI-DRIVEN DEVELOPMENT</div>
         <h1>Sistemas e Ferramentas.<br><span>Em Tempo Recorde.</span></h1>
         <p>Desenvolvimento focado em performance extrema, Vanilla JS e Web APIs. O que demorava meses, a Gama Next
-            constrói do zero. <strong>Todas as ferramentas e jogos abaixo foram arquitetados via IA estrutural
+            constrói em pouquíssimo tempo. <strong>Todas as ferramentas e jogos abaixo foram arquitetados via IA
+                estrutural
                 pura.</strong></p>
         <div class="cta-group">
             <a href="#vision-suite" class="btn btn-primary">Conhecer Vision Suite</a>
-            <a href="#prompt" class="btn btn-outline">Ver o Prompt Mestre</a>
+            <a href="#nano-frontend" class="btn btn-outline">Conceito Nano Frontend</a>
         </div>
     </section>
 
-    <!-- NOVA SEÇÃO: GAMA VISION SUITE -->
+    <!-- SEÇÃO: GAMA VISION SUITE -->
     <div class="section-alt">
         <section id="vision-suite" class="section">
             <h2>Gama Vision Suite <span
@@ -622,7 +717,7 @@
     </div>
 
     <section id="portfolio" class="section">
-        <h2>Apps</h2>
+        <h2>Apps & Motores Gráficos</h2>
         <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">Nossas
             provas de conceito originais. Onde velocidade e complexidade arquitetural andam juntas.</p>
 
@@ -660,130 +755,277 @@
         </div>
     </section>
 
-    <section id="metodo" class="section">
-        <h2>A Engenharia por Trás</h2>
+    <!-- SEÇÃO: DASHBOARDS -->
+    <div class="section-alt">
+        <section id="dashboards" class="section">
+            <h2>Gama Dashboards</h2>
+            <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">
+                Plataformas interativas de inteligência de dados. Interface modular com drag-and-drop, integrando
+                dezenas de APIs públicas em tempo real.</p>
+
+            <div class="grid">
+                <!-- Gama World -->
+                <div class="card" style="border-top: 3px solid var(--dash-world);">
+                    <div class="badge badge-ai"
+                        style="color: var(--dash-world); border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.1);">
+                        🌍 Global Intelligence</div>
+                    <h3>Gama World</h3>
+                    <p>Dashboard analítico global. Agrega dados demográficos, climáticos, mercadológicos e sismológicos
+                        de qualquer país do mundo em tempo real, extraindo automaticamente a paleta de cores de cada
+                        bandeira.</p>
+                    <a href="https://gamaworld.vercel.app" target="_blank" class="card-link"
+                        style="color: var(--dash-world);">Acessar Gama World ➔</a>
+                </div>
+
+                <!-- Gama Brasil -->
+                <div class="card" style="border-top: 3px solid var(--dash-br);">
+                    <div class="badge badge-ai"
+                        style="color: var(--dash-br); border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1);">
+                        🇧🇷 National Data</div>
+                    <h3>Gama Brasil</h3>
+                    <p>Painel de telemetria nacional. Focado em indicadores da economia brasileira, infraestrutura,
+                        notícias locais e clima, processando informações institucionais com renderização otimizada
+                        diretamente no cliente.</p>
+                    <a href="https://gamabrasil.vercel.app" target="_blank" class="card-link"
+                        style="color: var(--dash-br);">Acessar Gama Brasil ➔</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- SEÇÃO: AUDIO SUITE -->
+    <section id="audio-suite" class="section">
+        <h2>Gama Audio Suite <span
+                style="font-size: 0.9rem; vertical-align: middle; background: var(--audio-forge); color: #fff; padding: 4px 10px; border-radius: 4px; margin-left: 10px; font-weight: 900;">NEW</span>
+        </h2>
+        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">
+            Processamento de Sinal Digital (DSP) extremo rodando 100% no cliente via Web Audio API. DAWs completas,
+            mixagem em tempo real e codificação sem tocar em um servidor.
+        </p>
+
+        <div class="grid">
+            <!-- Sonicforge -->
+            <div class="card" style="border-top: 3px solid var(--audio-forge);">
+                <div class="badge badge-ai"
+                    style="color: var(--audio-forge); border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.1);">
+                    🎛️ Mastering DAW</div>
+                <h3>Gama Sonicforge</h3>
+                <p>Estúdio de masterização e manipulação de MP3 no navegador. Conta com EQ Matricial Dinâmico, separação
+                    de stems (Vocal/Drum Cut), transposição de pitch e encoder LameJS integrado para exportação local.
+                </p>
+                <a href="https://gamasonicforge.vercel.app" target="_blank" class="card-link"
+                    style="color: var(--audio-forge);">Abrir Sonicforge ➔</a>
+            </div>
+
+            <!-- Ultimate DJ -->
+            <div class="card" style="border-top: 3px solid var(--audio-dj);">
+                <div class="badge badge-speed"
+                    style="color: var(--audio-dj); border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.1);">
+                    🎧 Zero-Latency Engine</div>
+                <h3>Gama Ultimate DJ</h3>
+                <p>Setup DJ profissional com dois decks, crossfader, filtros passa-alta/baixa e engine de scratch
+                    realista. Utiliza texturas procedurais de vinil e renderização de onda em RAM para garantir
+                    latência zero.</p>
+                <a href="https://gamaultimatedj.vercel.app" target="_blank" class="card-link"
+                    style="color: var(--audio-dj);">Tocar Agora ➔</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMPT MASTER -->
+    <div class="section-alt">
+        <section id="prompt" class="section">
+            <h2>O "Prompt Alma"</h2>
+            <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 40px; font-size: 1.1rem;">A
+                base
+                lógica que injetamos na IA para criar sistemas ultrarrápidos, polidos e sem dependências.</p>
+
+            <div class="prompt-container">
+                <div class="prompt-header">
+                    <span
+                        style="font-family: 'Fira Code'; font-size: 0.85rem; font-weight: bold; color: #fff;">gama_sys_architect_v3.md</span>
+                    <button class="btn" onclick="copyPrompt()" id="copyBtn"
+                        style="background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 8px 16px; font-size: 0.75rem;">COPIAR
+                        PROMPT</button>
+                </div>
+                <div class="prompt-body" id="promptText">Aja como um Engenheiro de Software Sênior especialista em
+                    Vanilla
+                    JS, Algoritmos Complexos e Web APIs nativas (Canvas, WebGL, FileReader, WebRTC).
+                    Sua missão é criar uma ferramenta profissional, polida e de nível comercial em um ÚNICO ARQUIVO HTML
+                    (contendo CSS via Tailwind CDN e JS inline).
+
+                    A ferramenta será: [INSERIR DESCRIÇÃO DO SISTEMA/VISUALIZADOR/EDITOR AQUI].
+
+                    Independentemente da complexidade solicitada, o código final DEVE OBRIGATORIAMENTE seguir a seguinte
+                    arquitetura:
+
+                    1. REGRA DE OURO (ZERO ASSETS EXTERNOS):
+                    Não use imagens externas, backend, arquivos de áudio ou frameworks pesados como React/Vue. Toda a
+                    interface deve ser renderizada via Tailwind CSS e toda a lógica matemática/dados rodará no lado do
+                    cliente (Client-Side Processing).
+
+                    2. PERFORMANCE & ARQUITETURA:
+                    - Utilize Classes ES6 para gerenciar as "Engines" do sistema.
+                    - Se for processamento de imagem: Acesse os dados bruto via `ctx.getImageData`, opere os canais RGBA
+                    com
+                    Uint8ClampedArray e evite loops aninhados lentos.
+                    - Gerencie Estados de UI de forma clara (Carregando, Processando, Finalizado).
+
+                    3. DESIGN SYSTEM (CYBER/MODERN):
+                    - Fundo muito escuro (#050505), fontes modernas (JetBrains Mono e Rajdhani/Inter).
+                    - Bordas sutis, glassmorphism sutil (backdrop-blur) e acentos de cores vibrantes.
+                    - Feedbacks visuais intensos para o usuário (Loaders de console, badges piscando, logs simulados).
+
+                    4. TRATAMENTO DE ERROS & UX:
+                    - Valide inputs (ex: Checar se o arquivo é imagem, checar limites de memória para resoluções
+                    gigantes).
+                    - Se a operação for pesada, utilize `setTimeout` ou `requestAnimationFrame` para não "congelar" a UI
+                    (permitindo que loaders rodem enquanto o processamento JS ocorre em background).
+
+                    Escreva o código fonte HTML completo, comentado e pronto para produção em ambiente real.</div>
+            </div>
+
+            <!-- PÍLULA DE CONHECIMENTO -->
+            <div class="knowledge-pill">
+                <strong>⚠️ Pílula de Conhecimento: Limite de Contexto e O Método de Partição</strong>
+                <p>Sistemas como o *Gama Repainter* ou *Obliterator* contêm matemática complexa (Cálculos de distância
+                    Euclidiana de cor, Convolução de Matrizes, etc). Se você pedir para a IA criar tudo em um único
+                    prompt
+                    de uma vez, ela omitirá detalhes ou criará bugs de performance.</p>
+                <p style="color: #fff; font-weight: 600; margin-top: 15px;">O Pipeline de Construção:</p>
+                <ol>
+                    <li>Use o prompt acima definindo a casca visual e a infraestrutura HTML/Tailwind
+                        primeiro.</li>
+                    <li>Teste a UI. Se estiver perfeita, envie o segundo comando: <em>"A UI está ótima. Agora vamos
+                            focar
+                            APENAS na função matemática de extração do histograma. Crie o algoritmo para ler os pixels
+                            com
+                            performance."</em></li>
+                    <li>Avance módulo por módulo (Upload -> Preview -> Algoritmo Core -> Exportação).</li>
+                    <li>Peça micro-otimizações: <em>"Esse loop for duplo está travando a tela. Reescreva utilizando Web
+                            Workers ou dividindo em chunks no RequestAnimationFrame."</em></li>
+                </ol>
+            </div>
+        </section>
+    </div>
+
+    <!-- MANIFESTO: NANO FRONTEND -->
+    <section id="nano-frontend" class="section">
+        <h2 style="margin-bottom: 10px;">O Conceito: Nano Frontend</h2>
+        <p
+            style="text-align: center; color: var(--primary); font-family: 'Fira Code', monospace; font-size: 0.9rem; font-weight: bold; margin-bottom: 50px;">
+            Por que eu parei de construir grandes aplicações e comecei a criar produtos de uma página
+        </p>
+
+        <div class="manifesto-intro">
+            <p>Durante muito tempo, o “caminho certo” do frontend parecia claro: SPAs enormes, arquiteturas
+                complexas, múltiplas camadas, backend obrigatório, pipelines longos.</p>
+            <br>
+            <p><strong>Mas algo mudou.</strong></p>
+            <br>
+            <p>Com a chegada da IA como força real de produção de código, ficou evidente para mim que o gargalo não
+                é mais escrever código, e sim <strong>definir bem o escopo, entregar rápido e provar valor</strong>.
+                Foi daí que nasceu a abordagem arquitetural da Gama Next.</p>
+        </div>
+
         <div class="grid">
             <div class="card" style="border-top: 3px solid var(--primary);">
-                <h3>🤖 IA como Arquiteta</h3>
-                <p>Não escrevemos boilerplate manual. Orquestramos matrizes e algoritmos através de Engenharia de
-                    Prompts avançada. A IA (Claude/GPT) atua como compradora do código bruto enquanto focamos no design
-                    criativo e matemático.</p>
-            </div>
-            <div class="card" style="border-top: 3px solid var(--secondary);">
-                <h3>⚡ Vanilla & Web APIs</h3>
-                <p>Sem pacotes pesados. Extraímos poder máximo do navegador utilizando WebGL, Canvas API, Web Audio API,
-                    FileReader e Tensores locais nativos, mantendo o software em Single Files de alta performance.</p>
-            </div>
-            <div class="card" style="border-top: 3px solid var(--warning);">
-                <h3>🔥 Foco em Entrega Real</h3>
-                <p>Construímos de forma incremental. Não gastamos meses planejando refatorações. Vendemos ideias
-                    matemáticas transformadas em código funcional, testado e em produção no menor tempo humano possível.
+                <h3>O que é?</h3>
+                <p style="margin-bottom: 10px;">Uma abordagem onde <strong>cada página é um produto
+                        completo</strong>. Em vez de um “grande app”, você tem vários pequenos produtos autônomos.
                 </p>
-            </div>
-        </div>
-    </section>
-
-    <section id="prompt" class="section">
-        <h2>O "Prompt Alma"</h2>
-        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 40px; font-size: 1.1rem;">A base
-            lógica que injetamos na IA para criar sistemas ultrarrápidos, polidos e sem dependências.</p>
-
-        <div class="prompt-container">
-            <div class="prompt-header">
-                <span
-                    style="font-family: 'Fira Code'; font-size: 0.85rem; font-weight: bold; color: #fff;">gama_sys_architect_v3.md</span>
-                <button class="btn" onclick="copyPrompt()" id="copyBtn"
-                    style="background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 8px 16px; font-size: 0.75rem;">COPIAR
-                    PROMPT</button>
-            </div>
-            <div class="prompt-body" id="promptText">Aja como um Engenheiro de Software Sênior especialista em Vanilla
-                JS, Algoritmos Complexos e Web APIs nativas (Canvas, WebGL, FileReader, WebRTC).
-                Sua missão é criar uma ferramenta profissional, polida e de nível comercial em um ÚNICO ARQUIVO HTML
-                (contendo CSS via Tailwind CDN e JS inline).
-
-                A ferramenta será: [INSERIR DESCRIÇÃO DO SISTEMA/VISUALIZADOR/EDITOR AQUI].
-
-                Independentemente da complexidade solicitada, o código final DEVE OBRIGATORIAMENTE seguir a seguinte
-                arquitetura:
-
-                1. REGRA DE OURO (ZERO ASSETS EXTERNOS):
-                Não use imagens externas, backend, arquivos de áudio ou frameworks pesados como React/Vue. Toda a
-                interface deve ser renderizada via Tailwind CSS e toda a lógica matemática/dados rodará no lado do
-                cliente (Client-Side Processing).
-
-                2. PERFORMANCE & ARQUITETURA:
-                - Utilize Classes ES6 para gerenciar as "Engines" do sistema.
-                - Se for processamento de imagem: Acesse os dados bruto via `ctx.getImageData`, opere os canais RGBA com
-                Uint8ClampedArray e evite loops aninhados lentos.
-                - Gerencie Estados de UI de forma clara (Carregando, Processando, Finalizado).
-
-                3. DESIGN SYSTEM (CYBER/MODERN):
-                - Fundo muito escuro (#050505), fontes modernas (JetBrains Mono e Rajdhani/Inter).
-                - Bordas sutis, glassmorphism sutil (backdrop-blur) e acentos de cores vibrantes.
-                - Feedbacks visuais intensos para o usuário (Loaders de console, badges piscando, logs simulados).
-
-                4. TRATAMENTO DE ERROS & UX:
-                - Valide inputs (ex: Checar se o arquivo é imagem, checar limites de memória para resoluções gigantes).
-                - Se a operação for pesada, utilize `setTimeout` ou `requestAnimationFrame` para não "congelar" a UI
-                (permitindo que loaders rodem enquanto o processamento JS ocorre em background).
-
-                Escreva o código fonte HTML completo, comentado e pronto para produção em ambiente real.</div>
-        </div>
-
-        <!-- PÍLULA DE CONHECIMENTO -->
-        <div class="knowledge-pill">
-            <strong>⚠️ Pílula de Conhecimento: Limite de Contexto e O Método de Partição</strong>
-            <p>Sistemas como o *Gama Repainter* ou *Obliterator* contêm matemática complexa (Cálculos de distância
-                Euclidiana de cor, Convolução de Matrizes, etc). Se você pedir para a IA criar tudo em um único prompt
-                de uma vez, ela omitirá detalhes ou criará bugs de performance.</p>
-            <p style="color: #fff; font-weight: 600; margin-top: 15px;">O Pipeline de Construção:</p>
-            <ol>
-                <li>Use o prompt acima definindo a <strong>casca visual e a infraestrutura HTML/Tailwind</strong>
-                    primeiro.</li>
-                <li>Teste a UI. Se estiver perfeita, envie o segundo comando: <em>"A UI está ótima. Agora vamos focar
-                        APENAS na função matemática de extração do histograma. Crie o algoritmo para ler os pixels com
-                        performance."</em></li>
-                <li>Avance módulo por módulo (Upload -> Preview -> Algoritmo Core -> Exportação).</li>
-                <li>Peça micro-otimizações: <em>"Esse loop for duplo está travando a tela. Reescreva utilizando Web
-                        Workers ou dividindo em chunks no RequestAnimationFrame."</em></li>
-            </ol>
-        </div>
-    </section>
-
-    <!-- NOVA SEÇÃO: PERFIL DO DESENVOLVEDOR -->
-    <section id="founder" class="section section-alt">
-        <h2>Lead Architect <span style="color: var(--primary)">André Victor</span></h2>
-        <div class="founder-grid">
-            <!-- Coluna Bio -->
-            <div class="founder-bio">
-                <p>Especialista em Inteligência Artificial e Desenvolvimento de Software com <strong>mais de 20 anos
-                        de experiência</strong>.</p>
-                <p>Após duas décadas liderando projetos de alta complexidade, André Victor fundou a Gama Next com um
-                    objetivo claro: <em>Expandir o conhecimento de elite para o mundo</em>, quebrando barreiras
-                    técnicas e democratizando a construção de software inteligente.</p>
-
-                <ul class="services-list">
-                    <li>🚀 <strong>Desenvolvimento Rápido:</strong> MVPs e Ferramentas em tempo recorde.</li>
-                    <li>💰 <strong>Custo Otimizado:</strong> Soluções baratas e escaláveis (Serverless/Single File).
-                    </li>
-                    <li>🎓 <strong>Educação:</strong> Aulas Particulares e Mentoria em IA/Dev.</li>
-                    <li>🧠 <strong>Consultoria:</strong> Arquitetura de Software e Integração de IA.</li>
+                <ul class="manifesto-list">
+                    <li>Um único arquivo HTML contém tudo.</li>
+                    <li>Não há backend ou dependências externas.</li>
+                    <li>Não há build step (Webpack/Vite).</li>
+                    <li>Cada deploy é 100% independente.</li>
+                    <li>Se precisar evoluir, evolui. Se descartar, descarta.</li>
                 </ul>
             </div>
 
-            <!-- Coluna Contato/CTA -->
-            <div class="founder-contact">
-                <div class="contact-card">
-                    <h3>Tem uma ideia?</h3>
-                    <p style="margin-bottom: 25px; color: #ccc;">Desenvolvimento com qualidade de estúdio e velocidade
-                        de IA. Seja para aprender ou para construir, o caminho mais curto é agora.</p>
-                    <a href="mailto:neoandrevictor@gmail.com" class="btn btn-glow"
-                        style="text-decoration: none; display: inline-block;">SOLICITAR ORÇAMENTO ➔</a>
-                    <p class="email-display">neoandrevictor@gmail.com</p>
-                </div>
+            <div class="card" style="border-top: 3px solid var(--warning);">
+                <h3>Por que hoje?</h3>
+                <p style="margin-bottom: 10px;">Porque a realidade do mercado mudou. A velocidade de entrega virou
+                    um diferencial real contra a paralisia de análise.</p>
+                <ul class="manifesto-list">
+                    <li>IA acelera drasticamente a criação lógica.</li>
+                    <li>O custo de experimentar ideias caiu a quase zero.</li>
+                    <li>A web voltou a valorizar a simplicidade extrema.</li>
+                    <li>O portfólio virou mais importante que a promessa.</li>
+                    <li>O foco sai da "arquitetura teórica" para o resultado.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-top: 3px solid var(--secondary);">
+                <h3>Não é Micro-Frontend</h3>
+                <p style="margin-bottom: 10px;">Micro-frontends nasceram para resolver problemas de coordenação em
+                    grandes empresas e times gigantescos.</p>
+                <ul class="manifesto-list">
+                    <li>Nano Frontend nasce para desenvolvedores solo.</li>
+                    <li>Ideal para times ágeis, freelancers e MVPs rápidos.</li>
+                    <li>Focado em demonstrações técnicas reais.</li>
+                    <li>Sem overhead de orquestração de rotas.</li>
+                    <li>Desacoplamento absoluto e brutal.</li>
+                </ul>
             </div>
         </div>
+
+        <div class="highlight-quote">
+            <h3>"Você não mostra prints. Você mostra links."</h3>
+            <p>Cada Nano Frontend é, ao mesmo tempo, um produto funcional, um experimento técnico, um case de
+                arquitetura e uma peça viva de portfólio.</p>
+        </div>
+
+        <div class="manifesto-outro">
+            <h3>Onde estou aplicando isso?</h3>
+            <p>Na própria <strong>Gama Next</strong>. Todos os painéis, suítes de imagem e jogos acima são Nano
+                Frontends focados em dados e processamento client-side, rápidos e autônomos.</p>
+            <br>
+            <p>Nano Frontend não é sobre fazer menos.<br>É sobre <strong>fazer o suficiente, bem feito, e entregar
+                    rápido</strong>.</p>
+            <br>
+            <p>Em um mundo onde robôs escrevem o código braçal, o diferencial passa a ser visão, decisão e entrega.
+                É exatamente isso que eu demonstro em cada projeto.</p>
+        </div>
     </section>
+
+    <!-- SEÇÃO: PERFIL DO DESENVOLVEDOR -->
+    <div class="section-alt">
+        <section id="founder" class="section">
+            <h2>Lead Architect <span style="color: var(--primary)">André Victor</span></h2>
+            <div class="founder-grid">
+                <!-- Coluna Bio -->
+                <div class="founder-bio">
+                    <p>Especialista em Inteligência Artificial e Desenvolvimento de Software com <strong>mais de 20 anos
+                            de experiência</strong>.</p>
+                    <p>Após duas décadas liderando projetos de alta complexidade, André Victor fundou a Gama Next com um
+                        objetivo claro: <em>Expandir o conhecimento de elite para o mundo</em>, quebrando barreiras
+                        técnicas e democratizando a construção de software inteligente.</p>
+
+                    <ul class="services-list">
+                        <li>🚀 <strong>Desenvolvimento Rápido:</strong> MVPs e Ferramentas em tempo recorde.</li>
+                        <li>💰 <strong>Custo Otimizado:</strong> Soluções baratas e escaláveis (Serverless/Single File).
+                        </li>
+                        <li>🎓 <strong>Educação:</strong> Aulas Particulares e Mentoria em IA/Dev.</li>
+                        <li>🧠 <strong>Consultoria:</strong> Arquitetura de Software e Integração de IA.</li>
+                    </ul>
+                </div>
+
+                <!-- Coluna Contato/CTA -->
+                <div class="founder-contact">
+                    <div class="contact-card">
+                        <h3>Tem uma ideia?</h3>
+                        <p style="margin-bottom: 25px; color: #ccc;">Desenvolvimento com qualidade de estúdio e
+                            velocidade
+                            de IA. Seja para aprender ou para construir, o caminho mais curto é agora.</p>
+                        <a href="mailto:neoandrevictor@gmail.com" class="btn btn-glow"
+                            style="text-decoration: none; display: inline-block;">SOLICITAR ORÇAMENTO ➔</a>
+                        <p class="email-display">neoandrevictor@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <footer>
         <div class="logo" style="margin-bottom: 15px; font-size: 1.5rem;">GAMA <span>NEXT</span></div>
