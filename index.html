@@ -1,653 +1,1101 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAMA IA // Agentic RAG Multi-Step</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
+    <title>Gama Next | Engenharia de IA em Tempo Recorde</title>
+    <!-- Fontes limpas e modernas -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #050505;
-            --accent-purple: #8b5cf6;
-            --accent-green: #10b981;
-            --accent-blue: #3b82f6;
-            --glass-border: rgba(139, 92, 246, 0.2);
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --primary: #00ffcc;
+            /* Cyan Principal */
+            --secondary: #ff0055;
+            /* Rosa/Vermelho Velocidade */
+            --warning: #ffcc00;
+            /* Amarelo Alerta/Pílula */
+            --card-bg: #0f0f0f;
+            --code-bg: #090909;
+            --border-color: #222;
+
+            /* Cores da Suite Vision */
+            --vision-color: #f43f5e;
+            --vision-extend: #0ea5e9;
+            --vision-luma: #22d3ee;
+            --vision-oblit: #ef4444;
+            --vision-repaint: #10b981;
+
+            /* Cores da AI Suite */
+            --ai-purple: #8b5cf6;
+
+            /* Cores Dashboards */
+            --dash-world: #3b82f6;
+            --dash-br: #10b981;
+
+            /* Cores Audio Suite */
+            --audio-forge: #8b5cf6;
+            /* Roxo Synth */
+            --audio-dj: #f43f5e;
+            /* Rosa Deck B */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: #e2e8f0;
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
-            background-image: radial-gradient(circle at 50% 0%, #1a1025 0%, #050505 80%);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
-
-        .glass-panel {
-            background: rgba(15, 10, 25, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-        }
-
-        .scanlines::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            z-index: 50;
-            background-size: 100% 3px;
-            pointer-events: none;
-        }
-
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #3b0764; border-radius: 2px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-purple); }
-
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .cursor-blink { animation: blink 1s step-end infinite; }
-        
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 5px var(--accent-purple); }
-            50% { box-shadow: 0 0 20px var(--accent-purple); }
-        }
-        .glow-active { animation: pulse-glow 2s infinite; }
-
-        .loader-bar {
-            height: 2px;
-            background: var(--accent-purple);
-            width: 0%;
-            transition: width 0.1s linear;
-        }
-
-        /* Acordeão Nativo de Pensamento */
-        details.think-box {
-            border-left: 2px solid #6b7280;
-            background: rgba(17, 24, 39, 0.6);
-            border-radius: 4px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        details.think-box summary {
-            cursor: pointer;
-            padding: 8px 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            color: #9ca3af;
+        /* HEADER */
+        header {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: rgba(5, 5, 5, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px 20px;
+            background: radial-gradient(circle at 50% 30%, #111 0%, var(--bg-color) 70%);
+            /* Padrão de grade super sutil no fundo */
+            background-image: linear-gradient(rgba(0, 255, 204, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 204, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .hero-tag {
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            padding: 6px 16px;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            background: rgba(0, 255, 204, 0.05);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 20px;
+            color: #ffffff;
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            max-width: 800px;
+            margin-bottom: 40px;
+            color: #aaa;
+        }
+
+        .hero p strong {
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #fff;
+            box-shadow: 0 4px 25px rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #333;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-glow {
+            background: var(--secondary);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 0, 85, 0.3);
+        }
+
+        .btn-glow:hover {
+            background: #ff3377;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 25px rgba(255, 0, 85, 0.5);
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background-color: #080808;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #fff;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        /* GRID SYSTEM */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        /* CARDS */
+        .card {
+            background-color: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: #555;
+            transform: translateY(-5px);
+            background-color: #141414;
+        }
+
+        .card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.05);
+        }
+
+        .card.featured:hover {
+            box-shadow: 0 10px 40px rgba(0, 255, 204, 0.15);
+        }
+
+        .card.featured.ai-card {
+            border-color: var(--ai-purple);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.08);
+        }
+
+        .card.featured.ai-card:hover {
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+            border-color: #a78bfa;
+        }
+
+        .card h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .card p {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            flex-grow: 1;
+            line-height: 1.7;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            list-style: none;
-        }
-        
-        details.think-box summary::-webkit-details-marker { display: none; }
-        details.think-box summary:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
-        details.think-box summary::before { content: "▶"; font-size: 0.6rem; transition: transform 0.2s ease; }
-        details.think-box[open] summary::before { transform: rotate(90deg); }
-        details.think-box[open] summary { border-bottom: 1px solid rgba(75, 85, 99, 0.4); }
-        
-        .think-content {
-            padding: 12px;
+            font-family: 'Fira Code', monospace;
             font-size: 0.75rem;
-            color: #9ca3af;
-            white-space: pre-wrap;
-            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .think-step-title {
-            color: #8b5cf6;
-            font-weight: bold;
-            margin-top: 12px;
-            margin-bottom: 4px;
-            display: block;
-            border-bottom: 1px dashed rgba(139, 92, 246, 0.3);
-            padding-bottom: 2px;
+        .badge-speed {
+            background: rgba(255, 204, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(255, 204, 0, 0.3);
         }
-        .think-step-title:first-child { margin-top: 0; }
-        
-        /* Estilos do ETA e Progress */
-        .phase-monitor {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 4px;
-            padding: 8px;
-            margin-top: 8px;
-            display: none;
+
+        .badge-ai {
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 204, 0.3);
         }
-        .phase-monitor.active { display: block; }
+
+        .card-link {
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+
+        .card-link:hover {
+            filter: brightness(1.5);
+            padding-left: 5px;
+        }
+
+        /* PROMPT AREA */
+        .prompt-container {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .prompt-header {
+            background: #111;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .prompt-body {
+            padding: 30px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #00ffcc;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.6;
+        }
+
+        /* PÍLULA DE CONHECIMENTO */
+        .knowledge-pill {
+            background: rgba(255, 204, 0, 0.05);
+            border-left: 4px solid var(--warning);
+            padding: 25px;
+            margin-top: 30px;
+            border-radius: 0 12px 12px 0;
+            border: 1px solid rgba(255, 204, 0, 0.1);
+            border-left: 4px solid var(--warning);
+            color: #ddd;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .knowledge-pill strong {
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .knowledge-pill ol {
+            margin-left: 20px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .knowledge-pill li {
+            margin-bottom: 10px;
+        }
+
+        .knowledge-pill p {
+            margin-bottom: 10px;
+            color: #aaa;
+        }
+
+        /* MANIFESTO NANO FRONTEND */
+        .manifesto-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        .manifesto-intro strong {
+            color: #fff;
+        }
+
+        .manifesto-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        .manifesto-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .manifesto-list li::before {
+            content: "➔";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 0.8rem;
+            top: 2px;
+        }
+
+        .highlight-quote {
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.1), rgba(0, 0, 0, 0));
+            border-left: 4px solid var(--primary);
+            padding: 40px;
+            border-radius: 12px;
+            margin: 60px auto;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .highlight-quote h3 {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 15px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .highlight-quote p {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .manifesto-outro {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .manifesto-outro p {
+            font-size: 1.1rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .manifesto-outro h3 {
+            color: #fff;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        /* FOUNDER SECTION STYLES */
+        .founder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .founder-bio h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .founder-bio p {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .services-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .services-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #222;
+            color: #fff;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .services-list li:last-child {
+            border-bottom: none;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, #111, #080808);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-top: 4px solid var(--primary);
+        }
+
+        .contact-card h3 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .email-display {
+            font-family: 'Fira Code', monospace;
+            color: var(--primary);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            background-color: #020202;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            nav {
+                margin-top: 15px;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding-top: 160px;
+            }
+
+            .section {
+                padding: 80px 20px;
+            }
+
+            .section h2 {
+                font-size: 2.2rem;
+            }
+
+            .founder-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .card h3 {
+                font-size: 1.4rem;
+            }
+
+            .prompt-body {
+                padding: 15px;
+                font-size: 0.75rem;
+            }
+
+            .highlight-quote h3 {
+                font-size: 1.6rem;
+            }
+        }
     </style>
 </head>
-<body class="h-screen w-screen flex flex-col scanlines relative">
 
-    <header class="h-16 glass-panel border-b border-t-0 border-x-0 flex items-center justify-between px-6 z-10 shrink-0">
-        <div class="flex items-center gap-3">
-            <div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_red]" id="status-indicator"></div>
-            <h1 class="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
-                GAMA IA <span class="text-sm font-mono text-gray-500 font-normal">v11.0 [AGENTIC_PIPELINE]</span>
-            </h1>
-        </div>
-        <div class="font-mono text-xs text-gray-400 flex gap-4">
-            <div>STATUS: <span id="system-status" class="text-red-400">OFFLINE</span></div>
-        </div>
+<body>
+
+    <header>
+        <a href="#" class="logo">GAMA <span>NEXT</span></a>
+        <nav>
+            <a href="#vision-suite">Vision Suite</a>
+            <a href="#ai-suite">AI Suite</a>
+            <a href="#portfolio">Apps & Motores</a>
+            <a href="#dashboards">Dashboards</a>
+            <a href="#audio-suite">Audio Suite</a>
+            <a href="#prompt">Prompt Master</a>
+            <a href="#nano-frontend">Nano Frontend</a>
+            <a href="#founder" style="color: var(--primary);">Contato / Founder</a>
+        </nav>
     </header>
 
-    <main class="flex-1 flex overflow-hidden z-10">
-        <aside class="w-80 glass-panel border-r border-t-0 border-b-0 border-l-0 hidden lg:flex flex-col p-4 gap-4">
-            <div class="flex-1 flex flex-col min-h-0 overflow-hidden border-b border-purple-500/20 pb-4">
-                <div class="flex justify-between items-center mb-2 border-b border-purple-500/30 pb-1">
-                    <h2 class="font-mono text-xs text-purple-500">MEMÓRIA NEURAL</h2>
-                    <button id="btn-new-chat" class="text-[10px] font-mono bg-purple-900/40 hover:bg-purple-600/60 text-purple-300 px-2 py-1 rounded transition-all">+ NOVO</button>
+    <section class="hero">
+        <div class="hero-tag">AI-DRIVEN DEVELOPMENT</div>
+        <h1>Sistemas e Ferramentas.<br><span>Em Tempo Recorde.</span></h1>
+        <p>Desenvolvimento focado em performance extrema, Vanilla JS e Web APIs. O que demorava meses, a Gama Next
+            constrói em pouquíssimo tempo. <strong>Todas as ferramentas e jogos abaixo foram arquitetados via IA estrutural pura.</strong></p>
+        <div class="cta-group">
+            <a href="#vision-suite" class="btn btn-primary">Conhecer Vision Suite</a>
+            <a href="#ai-suite" class="btn btn-glow" style="background: var(--ai-purple); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);">Conhecer AI Suite</a>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: GAMA VISION SUITE -->
+    <div class="section-alt">
+        <section id="vision-suite" class="section">
+            <h2>Gama Vision Suite <span
+                    style="font-size: 0.9rem; vertical-align: middle; background: var(--primary); color: #000; padding: 4px 10px; border-radius: 4px; margin-left: 10px; font-weight: 900;">NEW</span>
+            </h2>
+            <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">A
+                nova fronteira de processamento de imagem local. Motores neurais, aceleração WebGL e algoritmos pesados
+                rodando diretamente no seu navegador, sem servidores.</p>
+
+            <div class="grid">
+                <!-- Color Ultra -->
+                <div class="card" style="border-top: 3px solid var(--vision-color);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-color); border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.1);">
+                        🧠 Tensor / WebGL</div>
+                    <h3>Gama Color Ultra</h3>
+                    <p>IA que coloriza imagens preto e branco em tempo real. Utiliza clusterização neural e mapas de
+                        gradiente para inferir topografia de luminância e aplicar texturas RGB precisas mantendo o
+                        contraste original.</p>
+                    <a href="https://gamacolor.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-color);">Testar Colorização ➔</a>
                 </div>
-                <div id="history-list" class="flex-1 overflow-y-auto font-mono text-xs text-gray-400 space-y-1 pr-1"></div>
-            </div>
 
-            <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
-                <h2 class="font-mono text-xs text-purple-500 mb-2 border-b border-purple-500/30 pb-1">KERNEL LOGS</h2>
-                <div id="console-output" class="flex-1 font-mono text-[10px] text-gray-400 overflow-y-auto break-all space-y-1"></div>
-                
-                <div class="mt-4 pt-4 border-t border-gray-800 shrink-0">
-                    <p class="font-mono text-xs text-gray-500 mb-1">DOWNLOAD DOS TENSORES</p>
-                    <div class="w-full bg-gray-900 h-2 rounded overflow-hidden">
-                        <div id="download-progress" class="bg-purple-500 h-full w-0 transition-all duration-300"></div>
-                    </div>
-                    <p id="download-stats" class="font-mono text-[10px] text-right mt-1 text-gray-500">Aguardando init...</p>
+                <!-- Extend Ultra -->
+                <div class="card" style="border-top: 3px solid var(--vision-extend);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-extend); border-color: rgba(14, 165, 233, 0.3); background: rgba(14, 165, 233, 0.1);">
+                        🔍 Super-Res Engine</div>
+                    <h3>Gama Extend Ultra</h3>
+                    <p>Upscaler de resolução neural extrema. Aplica interpolação bicúbica acoplada a máscaras de
+                        convolução (Unsharp Mask Kernel) para extrapolar a contagem de pixels de imagens pequenas sem
+                        perdas ou blur.</p>
+                    <a href="https://gamaextend.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-extend);">Fazer Upscale ➔</a>
                 </div>
-            </div>
-        </aside>
 
-        <section class="flex-1 flex flex-col relative overflow-hidden">
-            <div id="boot-screen" class="absolute inset-0 z-30 flex items-center justify-center bg-[#050505]/80 backdrop-blur-md transition-opacity duration-500">
-                <div class="glass-panel p-8 max-w-lg w-[90%] rounded-xl border-l-2 border-l-purple-500 flex flex-col gap-5 relative overflow-hidden">
-                    <div class="flex items-center gap-3 border-b border-purple-500/20 pb-3 z-10">
-                        <div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_10px_red] cursor-blink"></div>
-                        <h2 class="font-mono text-sm text-purple-400 tracking-widest font-bold">GAMA KERNEL // STANDBY</h2>
-                    </div>
-                    
-                    <div class="text-gray-300 text-sm leading-relaxed font-mono z-10 space-y-2">
-                        <p class="text-blue-400 font-bold">> NOVO: Pipeline Autônomo de 4 Fases (Agentic RAG)</p>
-                        <ul class="text-[11px] text-gray-400 space-y-1 ml-2 border-l border-gray-700 pl-2">
-                            <li>[Fase 1] Geração de Lógica Inicial</li>
-                            <li>[Fase 2] Busca Dinâmica e Checagem na Wikipedia</li>
-                            <li>[Fase 3] Loop Interno de Autocrítica</li>
-                            <li>[Fase 4] Síntese da Resposta Final</li>
-                        </ul>
-                    </div>
-                    
-                    <button id="btn-init" class="mt-2 w-full px-6 py-4 bg-purple-900/40 hover:bg-purple-600/60 border border-purple-500/50 text-purple-300 font-mono text-sm rounded transition-all z-10">
-                        [ INICIAR INFERÊNCIA MULTI-STEP ]
-                    </button>
+                <!-- Luma Pro -->
+                <div class="card" style="border-top: 3px solid var(--vision-luma);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-luma); border-color: rgba(34, 211, 238, 0.3); background: rgba(34, 211, 238, 0.1);">
+                        📸 Raw Processing</div>
+                    <h3>Gama Luma Pro</h3>
+                    <p>Aprimoramento fotográfico matemático profundo. Correção Gamma dinâmica e curvas S-Curve para
+                        recuperação de sombras, além de extração complexa de metadados EXIF do header binário.</p>
+                    <a href="https://gamaluma.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-luma);">Corrigir Iluminação ➔</a>
                 </div>
-            </div>
 
-            <div id="chat-container" class="flex-1 overflow-y-auto p-6 space-y-6 pb-24 z-10"></div>
+                <!-- Obliterator Pro -->
+                <div class="card" style="border-top: 3px solid var(--vision-oblit);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-oblit); border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1);">
+                        🎯 Zero-Blur Clone</div>
+                    <h3>Gama Obliterator</h3>
+                    <p>Remoção cirúrgica de marcas e objetos indesejados. Emprega um scanner heurístico dinâmico em
+                        tempo real e um motor de clonagem de textura estrutural que reescreve pixels com 0% de borrado.
+                    </p>
+                    <a href="https://gamaobliterator.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-oblit);">Apagar Elementos ➔</a>
+                </div>
 
-            <div class="h-24 glass-panel border-t border-b-0 border-x-0 p-4 absolute bottom-0 w-full flex gap-3 items-center z-20">
-                <input type="text" id="user-input" disabled class="flex-1 h-full bg-black/60 border border-gray-700 rounded-lg px-4 font-mono text-sm text-white focus:outline-none focus:border-purple-500 transition-all disabled:opacity-50" placeholder="Aguardando inicialização da Engine..." autocomplete="off">
-                <button id="btn-send" disabled class="px-6 py-3 h-full bg-purple-600 hover:bg-purple-500 disabled:bg-gray-800 disabled:text-gray-500 text-white font-bold rounded transition-all">
-                    PROCESSAR
-                </button>
+                <!-- Repainter Ultra -->
+                <div class="card" style="border-top: 3px solid var(--vision-repaint);">
+                    <div class="badge badge-ai"
+                        style="color: var(--vision-repaint); border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1);">
+                        🎨 Chroma-Shift</div>
+                    <h3>Gama Repainter</h3>
+                    <p>Substituição de cor matricial avançada. Preserva a iluminação (Luma) exata do pixel original
+                        enquanto aplica transições HSL em tempo real baseadas em tolerância espacial e distância
+                        euclidiana.</p>
+                    <a href="https://gamarepainter.vercel.app/" target="_blank" class="card-link"
+                        style="color: var(--vision-repaint);">Substituir Cores ➔</a>
+                </div>
+
+                <!-- SISTEMA: GAMA CAPTURE -->
+                <div class="card" style="border-top: 3px solid #eab308;">
+                    <div class="badge badge-speed"
+                        style="color: #eab308; border-color: rgba(234, 179, 8, 0.3); background: rgba(234, 179, 8, 0.1);">
+                        🎥 Serverless Studio</div>
+                    <h3>Gama Capture</h3>
+                    <p>O substituto para o Loom. Gravação simultânea de Tela, Webcam e Microfone. Realiza a fusão PiP
+                        (Picture-in-Picture) e mixagem de áudio via WebRTC e Canvas API em tempo real, gerando arquivos
+                        pesados sem latência ou servidores.</p>
+                    <a href="https://gamacapture.vercel.app/" target="_blank" class="card-link"
+                        style="color: #eab308;">Abrir Estúdio ➔</a>
+                </div>
             </div>
         </section>
-    </main>
+    </div>
 
-    <script type="module">
-        class MemoryEngine {
-            constructor() {
-                this.dbKey = 'gama_ia_sessions';
-                this.sessions = this.loadAll();
-                this.currentSessionId = null;
-            }
-            loadAll() { return JSON.parse(localStorage.getItem(this.dbKey)) || []; }
-            saveAll() { localStorage.setItem(this.dbKey, JSON.stringify(this.sessions)); }
-            createSession() {
-                const id = 'sess_' + Date.now();
-                const session = { id, title: 'Nova Sessão Neural', messages: [], updatedAt: Date.now() };
-                this.sessions.unshift(session);
-                this.currentSessionId = id;
-                this.saveAll();
-                return session;
-            }
-            getCurrentSession() {
-                if (!this.currentSessionId && this.sessions.length > 0) this.currentSessionId = this.sessions[0].id;
-                else if (!this.currentSessionId) this.createSession();
-                return this.sessions.find(s => s.id === this.currentSessionId);
-            }
-            addMessage(role, content, thoughts = []) {
-                const session = this.getCurrentSession();
-                if(session.messages.length === 0 && role === 'user') session.title = content.substring(0, 30) + "...";
-                session.messages.push({ role, content, thoughts, timestamp: new Date().toISOString() });
-                session.updatedAt = Date.now();
-                this.saveAll();
-            }
-            getSlidingWindow(max = 4) {
-                const session = this.getCurrentSession();
-                if(!session || session.messages.length === 0) return [];
-                return session.messages.slice(-max).map(m => ({ role: m.role, content: m.content }));
-            }
-        }
+    <!-- SEÇÃO: GAMA AI SUITE (NOVO) -->
+    <section id="ai-suite" class="section">
+        <h2>Gama AI Suite <span style="font-size: 0.9rem; vertical-align: middle; background: var(--ai-purple); color: #fff; padding: 4px 10px; border-radius: 4px; margin-left: 10px; font-weight: 900;">NEW</span></h2>
+        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">
+            Inteligência Artificial e Agentes Autônomos rodando 100% no seu navegador. Privacidade absoluta, sem servidores de backend ou custos de API, com processamento direto na memória RAM.
+        </p>
 
-        class UIEngine {
-            constructor() {
-                this.els = {
-                    console: document.getElementById('console-output'),
-                    chat: document.getElementById('chat-container'),
-                    input: document.getElementById('user-input'),
-                    btnSend: document.getElementById('btn-send'),
-                    btnInit: document.getElementById('btn-init'),
-                    bootScreen: document.getElementById('boot-screen'),
-                    btnNewChat: document.getElementById('btn-new-chat'),
-                    historyList: document.getElementById('history-list'),
-                    status: document.getElementById('system-status'),
-                    indicator: document.getElementById('status-indicator'),
-                    dlProgress: document.getElementById('download-progress'),
-                    dlStats: document.getElementById('download-stats')
-                };
-                this.refs = { accordion: null, thinkContent: null, textNode: null, cursor: null, monitor: null, pbFill: null, pbName: null, pbEta: null };
-            }
+        <div class="grid">
+            <!-- Gama IA Agentic RAG -->
+            <div class="card featured ai-card">
+                <div class="badge badge-ai" style="color: var(--ai-purple); border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.1);">
+                    🧠 Agentic RAG Pipeline
+                </div>
+                <h3>Gama IA <span style="font-size: 0.8rem; font-family: 'Fira Code'; font-weight: normal; color: #a78bfa;">v11.0</span></h3>
+                <p>Terminal neural baseado em Transformers.js. Executa um LLM local acoplado a uma cadeia de raciocínio de 4 fases autônomas: Dedução Inicial, Busca Dinâmica (Wikipedia), Autocrítica e Síntese. Tudo gerenciado via Web Workers.</p>
+                <a href="https://gamaia.vercel.app" target="_blank" class="card-link" style="color: var(--ai-purple);">Iniciar Inferência Neural ➔</a>
+            </div>
+        </div>
+    </section>
 
-            log(msg, type = 'info') {
-                const colors = { info: 'text-gray-400', success: 'text-green-400', warn: 'text-yellow-400', error: 'text-red-500', phase: 'text-blue-400' };
-                const el = document.createElement('div');
-                el.className = colors[type];
-                el.innerHTML = `[${new Date().toLocaleTimeString()}] ${msg}`;
-                this.els.console.appendChild(el);
-                this.els.console.scrollTop = this.els.console.scrollHeight;
-            }
+    <!-- SEÇÃO: PORTFOLIO -->
+    <div class="section-alt">
+        <section id="portfolio" class="section">
+            <h2>Apps & Motores Gráficos</h2>
+            <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">Nossas
+                provas de conceito originais. Onde velocidade e complexidade arquitetural andam juntas.</p>
 
-            updateStatus(text, state) {
-                this.els.status.innerText = text;
-                this.els.indicator.className = `w-3 h-3 rounded-full shadow-[0_0_10px_currentColor] ${
-                    state === 'ready' ? 'bg-green-500 text-green-500' : 
-                    state === 'processing' ? 'bg-purple-500 text-purple-500 glow-active' : 'bg-red-500 text-red-500'
-                }`;
-            }
+            <div class="grid">
+                <!-- PROJETO PRINCIPAL: GAMASHARE -->
+                <div class="card featured">
+                    <div class="badge badge-speed">⏱️ Construído em 24 Horas</div>
+                    <h3>GamaShare</h3>
+                    <p>Sistema de comunicação P2P Full-Mesh 100% descentralizado. Opera sem servidores centrais de mídia,
+                        utilizando WebRTC nativo, topologia adaptativa com self-healing e transferência veloz de arquivos.
+                    </p>
+                    <a href="https://gamashare.vercel.app" target="_blank" class="card-link"
+                        style="color: var(--primary);">Testar Protocolo ➔</a>
+                </div>
 
-            updateDownload(loaded, total) {
-                if(total === 0) return;
-                const percent = (loaded / total) * 100;
-                this.els.dlProgress.style.width = `${percent}%`;
-                this.els.dlStats.innerText = `${(loaded/1024/1024).toFixed(1)} MB / ${(total/1024/1024).toFixed(1)} MB`;
-            }
+                <!-- JOGO 1: TILTOMON -->
+                <div class="card">
+                    <div class="badge badge-speed">⏱️ Construído em 24 Horas</div>
+                    <h3>Tiltomon</h3>
+                    <p>Motor de jogo construído do zero no Canvas. Onde Roguelite encontra Pong. Possui sistema de economia,
+                        upgrades dinâmicos e uma trilha sonora procedural gerada nativamente pela Web Audio API.</p>
+                    <a href="https://tiltomon.vercel.app" target="_blank" class="card-link"
+                        style="color: var(--secondary);">Jogar Agora ➔</a>
+                </div>
 
-            unlock() {
-                this.els.input.disabled = false;
-                this.els.btnSend.disabled = false;
-                this.els.input.placeholder = "Digite o prompt para a cadeia de 4 fases...";
-                this.els.input.focus();
-                if(this.els.bootScreen) {
-                    this.els.bootScreen.style.opacity = '0';
-                    setTimeout(() => this.els.bootScreen.remove(), 500);
-                }
-            }
+                <!-- JOGO 2: RECREATOR -->
+                <div class="card">
+                    <div class="badge badge-speed">⏱️ Construído em 24 Horas</div>
+                    <h3>Recreator</h3>
+                    <p>Simulação 3D imersiva de visualização de dados espaciais. Construída utilizando Three.js puro,
+                        explorando a arqueologia digital da informação através de renderização avançada no navegador.</p>
+                    <a href="https://recreatorofthepast.vercel.app" target="_blank" class="card-link"
+                        style="color: #fff;">Abrir Simulação ➔</a>
+                </div>
 
-            appendUserMsg(text) {
-                const div = document.createElement('div');
-                div.className = "flex justify-end";
-                div.innerHTML = `
-                    <div class="glass-panel p-4 max-w-[80%] rounded-tl-xl rounded-br-xl rounded-bl-xl border-r-2 border-r-gray-400 bg-gray-900/50">
-                        <div class="mb-1"><span class="font-mono text-[10px] text-gray-400">USUÁRIO</span></div>
-                        <p class="text-gray-100 text-sm whitespace-pre-wrap">${this.escapeHTML(text)}</p>
-                    </div>`;
-                this.els.chat.appendChild(div);
-                this.els.chat.scrollTop = this.els.chat.scrollHeight;
-            }
-
-            // Inicia o nó de resposta da IA em branco (preparado para Stream e Progresso)
-            createAIStreamNode() {
-                const div = document.createElement('div');
-                div.className = "flex justify-start w-full";
-                
-                const innerDiv = document.createElement('div');
-                innerDiv.className = "glass-panel p-4 max-w-[85%] rounded-tr-xl rounded-br-xl rounded-bl-xl border-l-2 border-l-purple-500 shadow-[0_0_15px_rgba(139,92,246,0.2)] flex flex-col gap-2 w-full";
-                
-                innerDiv.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="font-mono text-[10px] text-purple-400">GAMA IA // AGENTIC RAG</span></div>`;
-                
-                // Acordeão de Pensamento
-                const accordion = document.createElement('details');
-                accordion.className = "think-box";
-                accordion.open = true;
-                accordion.innerHTML = `<summary>🧠 Inicializando Pipeline...</summary><div class="think-content"></div>`;
-                
-                // Monitor de Progresso das Fases (Fica dentro do painel principal, acima da resposta final)
-                const monitor = document.createElement('div');
-                monitor.className = "phase-monitor active";
-                monitor.innerHTML = `
-                    <div class="flex justify-between font-mono text-[10px] text-blue-300 mb-1">
-                        <span class="phase-name">Preparando Tópicos...</span>
-                        <span class="phase-eta text-yellow-400">ETA: Calculando...</span>
+                <!-- JOGO 3: MINISHEEP -->
+                <div class="card" style="border-top: 3px solid var(--secondary);">
+                    <div class="badge badge-speed"
+                        style="color: var(--secondary); border-color: rgba(255, 0, 85, 0.3); background: rgba(255, 0, 85, 0.1);">
+                        🕹️ Custom Engine
                     </div>
-                    <div class="w-full bg-black h-1 rounded overflow-hidden">
-                        <div class="phase-fill bg-blue-500 h-full w-0 transition-all duration-200"></div>
+                    <h3>MiniSheep</h3>
+                    <p>Jogo de sobrevivência roguelite em Canvas 2D puro. Possui física nativa, sistema de upgrades
+                        dinâmicos, colisão AABB e trilha sonora gerada inteiramente por matemática (Web Audio API).</p>
+                    <a href="https://minisheep.vercel.app" target="_blank" class="card-link"
+                        style="color: var(--secondary);">Sobreviver Agora ➔</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- SEÇÃO: DASHBOARDS -->
+    <section id="dashboards" class="section">
+        <h2>Gama Dashboards</h2>
+        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">
+            Plataformas interativas de inteligência de dados. Interface modular com drag-and-drop, integrando
+            dezenas de APIs públicas em tempo real.</p>
+
+        <div class="grid">
+            <!-- Gama World -->
+            <div class="card" style="border-top: 3px solid var(--dash-world);">
+                <div class="badge badge-ai"
+                    style="color: var(--dash-world); border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.1);">
+                    🌍 Global Intelligence</div>
+                <h3>Gama World</h3>
+                <p>Dashboard analítico global. Agrega dados demográficos, climáticos, mercadológicos e sismológicos
+                    de qualquer país do mundo em tempo real, extraindo automaticamente a paleta de cores de cada
+                    bandeira.</p>
+                <a href="https://gamaworld.vercel.app" target="_blank" class="card-link"
+                    style="color: var(--dash-world);">Acessar Gama World ➔</a>
+            </div>
+
+            <!-- Gama Brasil -->
+            <div class="card" style="border-top: 3px solid var(--dash-br);">
+                <div class="badge badge-ai"
+                    style="color: var(--dash-br); border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1);">
+                    🇧🇷 National Data</div>
+                <h3>Gama Brasil</h3>
+                <p>Painel de telemetria nacional. Focado em indicadores da economia brasileira, infraestrutura,
+                    notícias locais e clima, processando informações institucionais com renderização otimizada
+                    diretamente no cliente.</p>
+                <a href="https://gamabrasil.vercel.app" target="_blank" class="card-link"
+                    style="color: var(--dash-br);">Acessar Gama Brasil ➔</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: AUDIO SUITE -->
+    <div class="section-alt">
+        <section id="audio-suite" class="section">
+            <h2>Gama Audio Suite <span
+                    style="font-size: 0.9rem; vertical-align: middle; background: var(--audio-forge); color: #fff; padding: 4px 10px; border-radius: 4px; margin-left: 10px; font-weight: 900;">NEW</span>
+            </h2>
+            <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 50px; font-size: 1.1rem;">
+                Processamento de Sinal Digital (DSP) extremo rodando 100% no cliente via Web Audio API. DAWs completas,
+                mixagem em tempo real e codificação sem tocar em um servidor.
+            </p>
+
+            <div class="grid">
+                <!-- Sonicforge -->
+                <div class="card" style="border-top: 3px solid var(--audio-forge);">
+                    <div class="badge badge-ai"
+                        style="color: var(--audio-forge); border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.1);">
+                        🎛️ Mastering DAW</div>
+                    <h3>Gama Sonicforge</h3>
+                    <p>Estúdio de masterização e manipulação de MP3 no navegador. Conta com EQ Matricial Dinâmico, separação
+                        de stems (Vocal/Drum Cut), transposição de pitch e encoder LameJS integrado para exportação local.
+                    </p>
+                    <a href="https://gamasonicforge.vercel.app" target="_blank" class="card-link"
+                        style="color: var(--audio-forge);">Abrir Sonicforge ➔</a>
+                </div>
+
+                <!-- Ultimate DJ -->
+                <div class="card" style="border-top: 3px solid var(--audio-dj);">
+                    <div class="badge badge-speed"
+                        style="color: var(--audio-dj); border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.1);">
+                        🎧 Zero-Latency Engine</div>
+                    <h3>Gama Ultimate DJ</h3>
+                    <p>Setup DJ profissional com dois decks, crossfader, filtros passa-alta/baixa e engine de scratch
+                        realista. Utiliza texturas procedurais de vinil e renderização de onda em RAM para garantir
+                        latência zero.</p>
+                    <a href="https://gamaultimatedj.vercel.app" target="_blank" class="card-link"
+                        style="color: var(--audio-dj);">Tocar Agora ➔</a>
+                </div>
+
+                <!-- Gama Nexus -->
+                <div class="card" style="border-top: 3px solid var(--primary);">
+                    <div class="badge badge-ai"
+                        style="color: var(--primary); border-color: rgba(0, 255, 204, 0.3); background: rgba(0, 255, 204, 0.1);">
+                        🎹 DSP / Web MIDI
                     </div>
-                `;
+                    <h3>Gama Nexus</h3>
+                    <p>Sintetizador profissional rodando direto no navegador. Conta com 17 patches matemáticos, suporte a
+                        teclados físicos via Web MIDI API, osciloscópio FFT em tempo real e gravador multipista sem
+                        servidor.</p>
+                    <a href="https://gamanexus.vercel.app" target="_blank" class="card-link"
+                        style="color: var(--primary);">Abrir Synth ➔</a>
+                </div>
+            </div>
+        </section>
+    </div>
 
-                // Wrapper de Texto da Resposta Final
-                const textWrapper = document.createElement('div');
-                const textNode = document.createElement('p');
-                textNode.className = "text-gray-200 text-sm leading-relaxed whitespace-pre-wrap inline";
-                const cursor = document.createElement('span');
-                cursor.className = "inline-block w-2 h-4 bg-purple-400 cursor-blink align-middle ml-1 hidden";
-                textWrapper.appendChild(textNode);
-                textWrapper.appendChild(cursor);
+    <!-- PROMPT MASTER -->
+    <section id="prompt" class="section">
+        <h2>O "Prompt Alma"</h2>
+        <p style="text-align: center; color: #aaa; margin-top: -30px; margin-bottom: 40px; font-size: 1.1rem;">A
+            base lógica que injetamos na IA para criar sistemas ultrarrápidos, polidos e sem dependências.</p>
 
-                innerDiv.appendChild(accordion);
-                innerDiv.appendChild(monitor);
-                innerDiv.appendChild(textWrapper);
-                div.appendChild(innerDiv);
-                
-                this.els.chat.appendChild(div);
-                this.els.chat.scrollTop = this.els.chat.scrollHeight;
-                
-                // Guardar referências para atualização via Worker
-                this.refs = {
-                    accordion,
-                    thinkContent: accordion.querySelector('.think-content'),
-                    textNode,
-                    cursor,
-                    monitor,
-                    pbName: monitor.querySelector('.phase-name'),
-                    pbEta: monitor.querySelector('.phase-eta'),
-                    pbFill: monitor.querySelector('.phase-fill')
-                };
-            }
+        <div class="prompt-container">
+            <div class="prompt-header">
+                <span style="font-family: 'Fira Code'; font-size: 0.85rem; font-weight: bold; color: #fff;">gama_sys_architect_v3.md</span>
+                <button class="btn" onclick="copyPrompt()" id="copyBtn"
+                    style="background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 8px 16px; font-size: 0.75rem;">COPIAR PROMPT</button>
+            </div>
+            <div class="prompt-body" id="promptText">Aja como um Engenheiro de Software Sênior especialista em
+                Vanilla JS, Algoritmos Complexos e Web APIs nativas (Canvas, WebGL, FileReader, WebRTC).
+                Sua missão é criar uma ferramenta profissional, polida e de nível comercial em um ÚNICO ARQUIVO HTML
+                (contendo CSS via Tailwind CDN e JS inline).
 
-            updatePhaseMonitor(name, step) {
-                this.refs.pbName.innerText = `[${step}/4] ${name}`;
-                this.refs.pbFill.style.width = `0%`;
-                this.refs.pbEta.innerText = "ETA: Calculando...";
-                this.refs.monitor.classList.add('active');
-            }
+                A ferramenta será: [INSERIR DESCRIÇÃO DO SISTEMA/VISUALIZADOR/EDITOR AQUI].
 
-            updatePhaseProgress(percent, etaSeconds) {
-                this.refs.pbFill.style.width = `${percent}%`;
-                this.refs.pbEta.innerText = `ETA: ${etaSeconds}s`;
-            }
+                Independentemente da complexidade solicitada, o código final DEVE OBRIGATORIAMENTE seguir a seguinte
+                arquitetura:
 
-            appendThoughtStep(stepTitle, content) {
-                if(!this.refs.thinkContent) return;
-                const html = `<span class="think-step-title">${stepTitle}</span>${this.escapeHTML(content)}\n\n`;
-                this.refs.thinkContent.insertAdjacentHTML('beforeend', html);
-                this.els.chat.scrollTop = this.els.chat.scrollHeight;
-            }
+                1. REGRA DE OURO (ZERO ASSETS EXTERNOS):
+                Não use imagens externas, backend, arquivos de áudio ou frameworks pesados como React/Vue. Toda a
+                interface deve ser renderizada via Tailwind CSS e toda a lógica matemática/dados rodará no lado do
+                cliente (Client-Side Processing).
 
-            finishPipeline(totalSteps, finalText) {
-                this.refs.monitor.classList.remove('active'); // Esconde o monitor de progresso
-                this.refs.accordion.querySelector('summary').innerText = `🧠 Cadeia de Raciocínio Concluída (${totalSteps} Fases)`;
-                this.refs.accordion.open = false; // Fecha o acordeão para focar na resposta
-                this.refs.cursor.classList.remove('hidden'); // Mostra o cursor para a digitação
-                this.streamText(finalText);
-            }
+                2. PERFORMANCE & ARQUITETURA:
+                - Utilize Classes ES6 para gerenciar as "Engines" do sistema.
+                - Se for processamento de imagem: Acesse os dados bruto via `ctx.getImageData`, opere os canais RGBA com
+                Uint8ClampedArray e evite loops aninhados lentos.
+                - Gerencie Estados de UI de forma clara (Carregando, Processando, Finalizado).
 
-            streamText(text) {
-                let i = 0;
-                const speed = Math.max(1, Math.floor(text.length / 100)); 
-                const type = () => {
-                    if (i < text.length) {
-                        this.refs.textNode.textContent += text.substring(i, i + speed);
-                        i += speed;
-                        this.els.chat.scrollTop = this.els.chat.scrollHeight;
-                        requestAnimationFrame(type);
-                    } else {
-                        this.refs.cursor.remove();
-                        window.GamaApp.finalizeInference();
-                    }
-                };
-                requestAnimationFrame(type);
-            }
+                3. DESIGN SYSTEM (CYBER/MODERN):
+                - Fundo muito escuro (#050505), fontes modernas (JetBrains Mono e Rajdhani/Inter).
+                - Bordas sutis, glassmorphism sutil (backdrop-blur) e acentos de cores vibrantes.
+                - Feedbacks visuais intensos para o usuário (Loaders de console, badges piscando, logs simulados).
 
-            escapeHTML(str) { return str.replace(/[&<>'"]/g, t => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[t])); }
+                4. TRATAMENTO DE ERROS & UX:
+                - Valide inputs (ex: Checar se o arquivo é imagem, checar limites de memória para resoluções
+                gigantes).
+                - Se a operação for pesada, utilize `setTimeout` ou `requestAnimationFrame` para não "congelar" a UI
+                (permitindo que loaders rodem enquanto o processamento JS ocorre em background).
+
+                Escreva o código fonte HTML completo, comentado e pronto para produção em ambiente real.</div>
+        </div>
+
+        <!-- PÍLULA DE CONHECIMENTO -->
+        <div class="knowledge-pill">
+            <strong>⚠️ Pílula de Conhecimento: Limite de Contexto e O Método de Partição</strong>
+            <p>Sistemas como o *Gama Repainter* ou *Obliterator* contêm matemática complexa (Cálculos de distância
+                Euclidiana de cor, Convolução de Matrizes, etc). Se você pedir para a IA criar tudo em um único
+                prompt de uma vez, ela omitirá detalhes ou criará bugs de performance.</p>
+            <p style="color: #fff; font-weight: 600; margin-top: 15px;">O Pipeline de Construção:</p>
+            <ol>
+                <li>Use o prompt acima definindo a casca visual e a infraestrutura HTML/Tailwind primeiro.</li>
+                <li>Teste a UI. Se estiver perfeita, envie o segundo comando: <em>"A UI está ótima. Agora vamos focar
+                        APENAS na função matemática de extração do histograma. Crie o algoritmo para ler os pixels com
+                        performance."</em></li>
+                <li>Avance módulo por módulo (Upload -> Preview -> Algoritmo Core -> Exportação).</li>
+                <li>Peça micro-otimizações: <em>"Esse loop for duplo está travando a tela. Reescreva utilizando Web
+                        Workers ou dividindo em chunks no RequestAnimationFrame."</em></li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- MANIFESTO: NANO FRONTEND -->
+    <div class="section-alt">
+        <section id="nano-frontend" class="section">
+            <h2 style="margin-bottom: 10px;">O Conceito: Nano Frontend</h2>
+            <p style="text-align: center; color: var(--primary); font-family: 'Fira Code', monospace; font-size: 0.9rem; font-weight: bold; margin-bottom: 50px;">
+                Por que eu parei de construir grandes aplicações e comecei a criar produtos de uma página
+            </p>
+
+            <div class="manifesto-intro">
+                <p>Durante muito tempo, o “caminho certo” do frontend parecia claro: SPAs enormes, arquiteturas
+                    complexas, múltiplas camadas, backend obrigatório, pipelines longos.</p>
+                <br>
+                <p><strong>Mas algo mudou.</strong></p>
+                <br>
+                <p>Com a chegada da IA como força real de produção de código, ficou evidente para mim que o gargalo não
+                    é mais escrever código, e sim <strong>definir bem o escopo, entregar rápido e provar valor</strong>.
+                    Foi daí que nasceu a abordagem arquitetural da Gama Next.</p>
+            </div>
+
+            <div class="grid">
+                <div class="card" style="border-top: 3px solid var(--primary);">
+                    <h3>O que é?</h3>
+                    <p style="margin-bottom: 10px;">Uma abordagem onde <strong>cada página é um produto
+                            completo</strong>. Em vez de um “grande app”, você tem vários pequenos produtos autônomos.</p>
+                    <ul class="manifesto-list">
+                        <li>Um único arquivo HTML contém tudo.</li>
+                        <li>Não há backend ou dependências externas.</li>
+                        <li>Não há build step (Webpack/Vite).</li>
+                        <li>Cada deploy é 100% independente.</li>
+                        <li>Se precisar evoluir, evolui. Se descartar, descarta.</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-top: 3px solid var(--warning);">
+                    <h3>Por que hoje?</h3>
+                    <p style="margin-bottom: 10px;">Porque a realidade do mercado mudou. A velocidade de entrega virou
+                        um diferencial real contra a paralisia de análise.</p>
+                    <ul class="manifesto-list">
+                        <li>IA acelera drasticamente a criação lógica.</li>
+                        <li>O custo de experimentar ideias caiu a quase zero.</li>
+                        <li>A web voltou a valorizar a simplicidade extrema.</li>
+                        <li>O portfólio virou mais importante que a promessa.</li>
+                        <li>O foco sai da "arquitetura teórica" para o resultado.</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-top: 3px solid var(--secondary);">
+                    <h3>Não é Micro-Frontend</h3>
+                    <p style="margin-bottom: 10px;">Micro-frontends nasceram para resolver problemas de coordenação em
+                        grandes empresas e times gigantescos.</p>
+                    <ul class="manifesto-list">
+                        <li>Nano Frontend nasce para desenvolvedores solo.</li>
+                        <li>Ideal para times ágeis, freelancers e MVPs rápidos.</li>
+                        <li>Focado em demonstrações técnicas reais.</li>
+                        <li>Sem overhead de orquestração de rotas.</li>
+                        <li>Desacoplamento absoluto e brutal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-quote">
+                <h3>"Você não mostra prints. Você mostra links."</h3>
+                <p>Cada Nano Frontend é, ao mesmo tempo, um produto funcional, um experimento técnico, um case de
+                    arquitetura e uma peça viva de portfólio.</p>
+            </div>
+
+            <div class="manifesto-outro">
+                <h3>Onde estou aplicando isso?</h3>
+                <p>Na própria <strong>Gama Next</strong>. Todos os painéis, suítes de imagem e jogos acima são Nano
+                    Frontends focados em dados e processamento client-side, rápidos e autônomos.</p>
+                <br>
+                <p>Nano Frontend não é sobre fazer menos.<br>É sobre <strong>fazer o suficiente, bem feito, e entregar
+                        rápido</strong>.</p>
+                <br>
+                <p>Em um mundo onde robôs escrevem o código braçal, o diferencial passa a ser visão, decisão e entrega.
+                    É exatamente isso que eu demonstro em cada projeto.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- SEÇÃO: PERFIL DO DESENVOLVEDOR -->
+    <section id="founder" class="section">
+        <h2>Lead Architect <span style="color: var(--primary)">André Victor</span></h2>
+        <div class="founder-grid">
+            <!-- Coluna Bio -->
+            <div class="founder-bio">
+                <p>Especialista em Inteligência Artificial e Desenvolvimento de Software com <strong>mais de 20 anos
+                        de experiência</strong>.</p>
+                <p>Após duas décadas liderando projetos de alta complexidade, André Victor fundou a Gama Next com um
+                    objetivo claro: <em>Expandir o conhecimento de elite para o mundo</em>, quebrando barreiras
+                    técnicas e democratizando a construção de software inteligente.</p>
+
+                <ul class="services-list">
+                    <li>🚀 <strong>Desenvolvimento Rápido:</strong> MVPs e Ferramentas em tempo recorde.</li>
+                    <li>💰 <strong>Custo Otimizado:</strong> Soluções baratas e escaláveis (Serverless/Single File).</li>
+                    <li>🎓 <strong>Educação:</strong> Aulas Particulares e Mentoria em IA/Dev.</li>
+                    <li>🧠 <strong>Consultoria:</strong> Arquitetura de Software e Integração de IA.</li>
+                </ul>
+            </div>
+
+            <!-- Coluna Contato/CTA -->
+            <div class="founder-contact">
+                <div class="contact-card">
+                    <h3>Tem uma ideia?</h3>
+                    <p style="margin-bottom: 25px; color: #ccc;">Desenvolvimento com qualidade de estúdio e
+                        velocidade de IA. Seja para aprender ou para construir, o caminho mais curto é agora.</p>
+                    <a href="mailto:neoandrevictor@gmail.com" class="btn btn-glow"
+                        style="text-decoration: none; display: inline-block;">SOLICITAR ORÇAMENTO ➔</a>
+                    <p class="email-display">neoandrevictor@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="margin-bottom: 15px; font-size: 1.5rem;">GAMA <span>NEXT</span></div>
+        <p style="color: #666; font-size: 0.9rem; font-weight: bold;">Velocidade. IA. Código Puro.</p>
+        <p style="color: #444; font-size: 0.8rem; margin-top: 30px;">&copy; 2026 Gama Next. Construído com Inteligência Artificial e Web APIs.</p>
+    </footer>
+
+    <script>
+        function copyPrompt() {
+            const text = document.getElementById("promptText").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById("copyBtn");
+                btn.style.background = "var(--primary)";
+                btn.style.color = "#000";
+                btn.innerText = "COPIADO!";
+                setTimeout(() => {
+                    btn.style.background = "transparent";
+                    btn.style.color = "var(--primary)";
+                    btn.innerText = "COPIAR PROMPT";
+                }, 2000);
+            });
         }
-
-        // ==========================================
-        // WORKER SCRIPT (4 FASES COM WIKIPEDIA RAG)
-        // ==========================================
-        const workerCode = `
-            import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1';
-            
-            env.allowLocalModels = false;
-            env.useBrowserCache = true;
-
-            let generator;
-
-            function extractResponse(out) {
-                const text = Array.isArray(out[0].generated_text) 
-                    ? out[0].generated_text[out[0].generated_text.length - 1].content 
-                    : String(out[0].generated_text).split('<|im_start|>assistant').pop().replace('<|im_end|>', '');
-                return text.trim();
-            }
-
-            // Função para RAG dinâmico dentro do Worker
-            async function fetchWikipedia(query) {
-                try {
-                    // Limpa a query para buscar os termos chaves principais
-                    const clean = query.replace(/[?.!]/g, '').split(' ').slice(0, 6).join(' ');
-                    const url = 'https://pt.wikipedia.org/w/api.php?action=query&list=search&srsearch=' + encodeURIComponent(clean) + '&utf8=&format=json&origin=*';
-                    const res = await fetch(url);
-                    const data = await res.json();
-                    
-                    if(data.query && data.query.search.length > 0) {
-                        const title = data.query.search[0].title;
-                        const extUrl = 'https://pt.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&titles=' + encodeURIComponent(title) + '&format=json&origin=*';
-                        const extRes = await fetch(extUrl);
-                        const extData = await extRes.json();
-                        const pageId = Object.keys(extData.query.pages)[0];
-                        return extData.query.pages[pageId].extract.substring(0, 500);
-                    }
-                    return "Nenhum dado externo retornado para a pesquisa.";
-                } catch(e) {
-                    return "Falha na conexão com a base de dados.";
-                }
-            }
-
-            // Helper para rodar uma fase com monitoramento de Tokens para o ETA
-            async function runInferencePhase(messages, maxTokens, phaseName, stepNum) {
-                postMessage({ type: 'phase_start', name: phaseName, step: stepNum });
-                
-                let tokens = 0;
-                let start = Date.now();
-                
-                const out = await generator(messages, {
-                    max_new_tokens: maxTokens,
-                    do_sample: false,
-                    repetition_penalty: 1.1,
-                    callback_function: () => {
-                        tokens++;
-                        const elapsedSecs = (Date.now() - start) / 1000;
-                        const tps = tokens / elapsedSecs; // Tokens per second
-                        const remainingTokens = Math.max(0, maxTokens - tokens);
-                        const eta = (remainingTokens / tps).toFixed(1);
-                        const percent = Math.min(100, (tokens / maxTokens) * 100);
-                        
-                        // Atualiza a UI a cada ~3 tokens para não sobrecarregar o postMessage
-                        if(tokens % 3 === 0) {
-                            postMessage({ type: 'phase_progress', percent, eta });
-                        }
-                    }
-                });
-                
-                postMessage({ type: 'phase_progress', percent: 100, eta: "0.0" });
-                return extractResponse(out);
-            }
-
-            self.onmessage = async (e) => {
-                const { action, payload } = e.data;
-                
-                if(action === 'INIT') {
-                    postMessage({ type: 'log', msg: 'Baixando/Carregando Tensores...', lvl: 'info' });
-                    generator = await pipeline('text-generation', 'Xenova/Qwen1.5-0.5B-Chat', {
-                        progress_callback: (x) => postMessage({ type: 'download_progress', data: x })
-                    });
-                    postMessage({ type: 'ready' });
-                }
-                
-                if(action === 'INFER') {
-                    try {
-                        const { history, prompt } = payload;
-                        let baseSystem = "Você é uma IA analítica. Responda APENAS em Português do Brasil.";
-                        let conversation = history ? [...history] : [];
-                        let thoughtsBuffer = [];
-
-                        // ---- FASE 1: LÓGICA INICIAL ----
-                        let msgFase1 = [
-                            { role: 'system', content: baseSystem + " INSTRUÇÃO: Escreva apenas seu raciocínio lógico inicial sobre a pergunta do usuário. Não dê a resposta final ainda." },
-                            ...conversation,
-                            { role: 'user', content: prompt }
-                        ];
-                        const thought1 = await runInferencePhase(msgFase1, 100, "Análise e Raciocínio Lógico", 1);
-                        postMessage({ type: 'thought_step', title: 'Fase 1: Dedução Inicial', text: thought1 });
-                        thoughtsBuffer.push(thought1);
-
-                        // ---- FASE 2: WIKIPEDIA RAG DINÂMICO ----
-                        postMessage({ type: 'phase_start', name: "Validação Dinâmica (Wikipedia)", step: 2 });
-                        
-                        // Simulando barra de progresso do Fetch (já que não há tokens gerados aqui)
-                        postMessage({ type: 'phase_progress', percent: 30, eta: "1.5" });
-                        const wikiData = await fetchWikipedia(prompt);
-                        postMessage({ type: 'phase_progress', percent: 80, eta: "0.2" });
-                        
-                        const thought2 = "Consultando contexto dinâmico via Wikipedia para o termo-chave da requisição...\\n\\n[DADOS RETORNADOS]:\\n" + wikiData;
-                        postMessage({ type: 'thought_step', title: 'Fase 2: Fact-Checking e Contexto Externo', text: thought2 });
-                        thoughtsBuffer.push(thought2);
-                        postMessage({ type: 'phase_progress', percent: 100, eta: "0.0" });
-
-                        // ---- FASE 3: AUTOCRÍTICA ----
-                        let msgFase3 = [
-                            { role: 'system', content: baseSystem },
-                            { role: 'user', content: prompt },
-                            { role: 'assistant', content: "Meu pensamento inicial: " + thought1 },
-                            { role: 'user', content: "CRÍTICA INTERNA: Leia os dados extraídos da Wikipedia a seguir: '" + wikiData + "'. Revise e corrija o seu pensamento inicial para evitar alucinações. Escreva sua autocrítica apontando o que estava certo e errado." }
-                        ];
-                        const thought3 = await runInferencePhase(msgFase3, 120, "Autocrítica e Alinhamento de Fatos", 3);
-                        postMessage({ type: 'thought_step', title: 'Fase 3: Refinamento e Correção de Alucinações', text: thought3 });
-                        thoughtsBuffer.push(thought3);
-
-                        // ---- FASE 4: SÍNTESE FINAL ----
-                        let msgFase4 = [
-                            { role: 'system', content: baseSystem },
-                            { role: 'user', content: prompt },
-                            { role: 'assistant', content: thought3 },
-                            { role: 'user', content: "Baseado em toda a validação de fatos acima, dê a resposta final direta e clara para minha pergunta principal." }
-                        ];
-                        const finalAnswer = await runInferencePhase(msgFase4, 200, "Síntese da Resposta Final", 4);
-
-                        // Finaliza a Pipeline
-                        postMessage({ type: 'inference_complete', text: finalAnswer, thoughts: thoughtsBuffer });
-
-                    } catch(err) {
-                        postMessage({ type: 'inference_complete', text: "Erro crasso na pipeline: " + err.message, thoughts: [] });
-                    }
-                }
-            };
-        `;
-
-        class AppController {
-            constructor() {
-                this.mem = new MemoryEngine();
-                this.ui = new UIEngine();
-                this.worker = null;
-                this.isProcessing = false;
-                this.filesTracking = new Map();
-                
-                this.bindEvents();
-                this.ui.log("Sistema Pronto. RAG Autônomo preparado.", "warn");
-            }
-
-            bindEvents() {
-                this.ui.els.btnInit.addEventListener('click', () => this.boot());
-                this.ui.els.btnSend.addEventListener('click', () => this.send());
-                this.ui.els.input.addEventListener('keypress', (e) => {
-                    if(e.key === 'Enter' && !this.isProcessing && !this.ui.els.btnSend.disabled) this.send();
-                });
-            }
-
-            boot() {
-                this.ui.els.btnInit.disabled = true;
-                this.ui.els.btnInit.innerText = "ALOCANDO...";
-                this.ui.updateStatus("CARREGANDO MODELO", "processing");
-
-                const blob = new Blob([workerCode], { type: 'application/javascript' });
-                this.worker = new Worker(URL.createObjectURL(blob), { type: 'module' });
-
-                this.worker.onmessage = (e) => this.handleWorker(e.data);
-                this.worker.postMessage({ action: 'INIT' });
-            }
-
-            handleWorker(data) {
-                switch(data.type) {
-                    case 'log': this.ui.log(data.msg, data.lvl); break;
-                    case 'download_progress':
-                        if(data.data.name) {
-                            this.filesTracking.set(data.data.name, { loaded: data.data.loaded || 0, total: data.data.total || 0 });
-                            let tL = 0, tT = 0;
-                            this.filesTracking.forEach(v => { tL += v.loaded; tT += v.total; });
-                            this.ui.updateDownload(tL, tT);
-                        }
-                        break;
-                    case 'ready':
-                        this.ui.updateStatus("ONLINE", "ready");
-                        this.ui.unlock();
-                        break;
-                    case 'phase_start':
-                        this.ui.log(`Iniciando Fase ${data.step}: ${data.name}`, 'phase');
-                        this.ui.updatePhaseMonitor(data.name, data.step);
-                        break;
-                    case 'phase_progress':
-                        this.ui.updatePhaseProgress(data.percent, data.eta);
-                        break;
-                    case 'thought_step':
-                        this.ui.appendThoughtStep(data.title, data.text);
-                        break;
-                    case 'inference_complete':
-                        this.mem.addMessage('assistant', data.text, data.thoughts);
-                        this.ui.finishPipeline(data.thoughts.length, data.text);
-                        break;
-                }
-            }
-
-            send() {
-                const text = this.ui.els.input.value.trim();
-                if(!text) return;
-
-                this.isProcessing = true;
-                this.ui.els.input.value = "";
-                this.ui.els.btnSend.disabled = true;
-                this.ui.els.input.disabled = true;
-                this.ui.updateStatus("LOOP INFERÊNCIA", "processing");
-
-                this.mem.addMessage('user', text);
-                this.ui.appendUserMsg(text);
-
-                // Prepara Interface para o Stream e Progresso
-                this.ui.createAIStreamNode();
-                
-                // Manda pro Worker rodar as 4 Fases
-                this.worker.postMessage({ 
-                    action: 'INFER', 
-                    payload: { prompt: text, history: this.mem.getSlidingWindow(4) } 
-                });
-            }
-
-            // Chamado pela UIEngine após terminar a animação de digitação
-            finalizeInference() {
-                this.isProcessing = false;
-                this.ui.els.btnSend.disabled = false;
-                this.ui.els.input.disabled = false;
-                this.ui.els.input.focus();
-                this.ui.updateStatus("ONLINE", "ready");
-                this.ui.log("Ciclo Agentic RAG Finalizado com Sucesso.", "success");
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => { window.GamaApp = new AppController(); });
     </script>
 </body>
+
 </html>
